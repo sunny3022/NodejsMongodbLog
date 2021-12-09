@@ -13,5 +13,9 @@
   ],
   "author": "sunny",
   "license": "GNU",
-  "git repository":"https://github.com/sunny3022/NodejsMongodbLog"
+  "git repository": "https://github.com/sunny3022/NodejsMongodbLog",
+  "dependencies": {
+    "express": "^4.17.1",
+    "init": "^0.1.2"
+  }
 }
