@@ -1,5 +1,6 @@
 const express = require("express")
 const app = express()
+const ejs = require('ejs')
 const mongoose = require('mongoose');
 mongoose.connect('mongodb://172.21.2.236:27017/190110910804');
 const schema={
@@ -27,9 +28,16 @@ app.use('/',express.static('public'))
 //             }
 //   })
 app.get("/input",(req,res)=>{
-    res.send(req.query)
+    // res.send(req.query)
     console.log(req.query)
     const kitty = new mydata({ name: req.query.fname,health:req.query.fname1 });
     kitty.save();
+    ejs.renderFile('result.html', {result:"成功写入"}, function(err, str){
+        // str => 输出渲染后的 HTML 字符串
+        
+        res.end(str)
+        
+        
+    })
 })
 app.listen(1804)
