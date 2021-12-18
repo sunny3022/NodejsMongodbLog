@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<meta charset="utf-8">
+<title>星空</title>
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" >
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" ></script>
+<script src="https://code.jquery.com/jquery.min.js" ></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" ></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" ></script>
+
+</head>
+<body>
+	<nav class="navbar navbar-expand-lg navbar-light bg-light" >
+		<!-- Just an image -->
+		<img src="photo/mm.jpg" width="30" height="30" alt=""> 
+		<button class="navbar-toggler" type="button" data-toggle="collapse"
+			data-target="#navbarSupportedContent"
+			aria-controls="navbarSupportedContent" aria-expanded="false"
+			aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+	
+		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+			<ul class="navbar-nav mr-auto">
+			
+				<li class="nav-item active"><a class="nav-link" href="AllArticleServlet">首页</a></li>
+				<li class="nav-item"><a class="nav-link" href="MyArticleServlet">我的帖子</a></li>
+				
+				<li class="nav-item"><a class="nav-link " href="Mymanagement.jsp">我的管理</a></li>
+				
+					
+				<li class="nav-item"><a class="nav-link " href="login.jsp">点我登录</a></li>
+				<li class="nav-item dropdown"><a
+					class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
+					role="button" data-toggle="dropdown" aria-haspopup="true"
+					aria-expanded="false"> ${username==null?'未登录':username}</a>
+					
+					
+					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+						<a class="dropdown-item" href="MyInfo">我的信息</a> <a
+							class="dropdown-item" href="editPwd.jsp">修改密码</a>
+						<div class="dropdown-divider"></div>
+						<a class="dropdown-item" href="login_out">注销</a>
+					</div>
+				
+					
+				</li>
+				</li>
+			</ul>
+			
+		</div>
+	</nav>
+	
+	<div class="container" style="margin-top: 10px">
+		<div class="row">
+
+			<% 
+                    	TArticle single=(TArticle)request.getAttribute("tarticle");
+                    	if(single==null)
+                    		out.println("阅读帖子失败！");
+                    	else{
+                    %>
+			<table border="0" width="1585" rules="all" cellpadding="0"
+				cellspacing="0">
+				<tr height="35" align="right">
+					<td>发表时间：<%=single.getTime() %>&nbsp;&nbsp;&nbsp;&nbsp; 评论：<%=single.getReview() %>
+						条&nbsp;&nbsp;&nbsp;&nbsp;阅读：${readcount}
+
+					</td>
+				</tr>
+				<tr height="15">
+					<td></td>
+				</tr>
+				<tr>
+					<td align="center"><b><font style="font-size: 25px"><%=single.getTitle()%></font></b></td>
+				</tr>
+				<tr>
+					<td align="right">博主： <%=single.getAuthor()%>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					</td>
+				</tr>
+				<tr height="15">
+					<td></td>
+				</tr>
+				<tr height="200">
+					<td valign="top" style="padding-left: 20; padding-right: 20"><%=single.getContent() %></td>
+
+				</tr>
+				<tr height="15">
+						</tr>
+			</table>
+			<form action="SendReviewServlet" method="post">
+				<div class="form-group row">
+					<label for="inputEmail3" class="col-sm-2 col-form-label">评论</label>
+					<div class="col-sm-10">
+						<textarea cols="100%" rows="5" placeholder="请输入评论..."
+							name="review"></textarea>
+					</div>
+
+				</div>
+				<div align="right">
+					<button type="submit" href="SendReviewServlet"
+						class="btn btn-primary">发布</button>
+					<input type="button" value="返&nbsp;回" class="btn btn-primary"
+						onClick="javascript:window.history.go(-1)">
+				</div>
+				<p>全部评论</p>
+				<table border="0" width="1085" rules="all" cellpadding="0"
+					cellspacing="0">
+					<tbody>
+						<c:forEach items="${articleList}" var="user" varStatus="i">
+							<tr cols="500">
+								<th scope="row">${i.count}</th>
+								<td align="right">评论者：${user.review_author}</td>
+								<td align="right">评论时间:${user.sdftime}</td>
+							</tr>
+							<tr>
+								<td valign="top" colspan="3">${user.review_content}</td>
+							</tr>
+
+						</c:forEach>
+					</tbody>
+				</table>
+
+			</form>
+
+			<%
+						                		}
+						                	%>
+
+		</div>
+	</div>
+</body>
+</html>

@@ -12,7 +12,7 @@ const schema={
 const mydata = mongoose.model('cat1s', schema);
 // const kitty = new mydata({ name: 'testZildjian2' });
 // kitty.save().then(() => console.log('testmeow1'));
-app.use('/',express.static('public'))
+app.use('/',express.static('login'))
 // app.get('/input',function(req,res,next){
 //     dataA = parseFloat(req.query.fname);
 //     dataB = parseFloat(req.query.fname1);

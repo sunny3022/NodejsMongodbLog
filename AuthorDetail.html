@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>星空</title>
+
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" >
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" ></script>
+	<script src="https://code.jquery.com/jquery.min.js" ></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" ></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" ></script>
+
+</head>
+<body>
+	<nav class="navbar navbar-expand-lg navbar-light bg-light" >
+		<!-- Just an image -->
+		<img src="photo/mm.jpg" width="30" height="30" alt=""> 
+		<button class="navbar-toggler" type="button" data-toggle="collapse"
+			data-target="#navbarSupportedContent"
+			aria-controls="navbarSupportedContent" aria-expanded="false"
+			aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+	
+		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+			<ul class="navbar-nav mr-auto">
+			
+				<li class="nav-item active"><a class="nav-link" href="AllArticleServlet">首页</a></li>
+				<li class="nav-item"><a class="nav-link" href="MyArticleServlet">我的帖子</a></li>
+				
+				<li class="nav-item"><a class="nav-link " href="Mymanagement.jsp">我的管理</a></li>
+				
+					
+				<li class="nav-item"><a class="nav-link " href="login.jsp">点我登录</a></li>
+				<li class="nav-item dropdown"><a
+					class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
+					role="button" data-toggle="dropdown" aria-haspopup="true"
+					aria-expanded="false"> ${username==null?'未登录':username}</a>
+					
+					
+					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+						<a class="dropdown-item" href="MyInfo">我的信息</a> <a
+							class="dropdown-item" href="editPwd.jsp">修改密码</a>
+						<div class="dropdown-divider"></div>
+						<a class="dropdown-item" href="login_out">注销</a>
+					</div>
+				
+					
+				</li>
+				</li>
+			</ul>
+			
+		</div>
+	</nav>
+	
+	
+	
+	<div class="container">
+		<div class="row" style="margin-top: 10px">
+			
+			<div >
+				<div class="row">
+				<div>
+				<form class="form-inline my-2 my-lg-0" action="SearchBytitle1" method="post">
+					<input class="form-control mr-sm-2" type="search"
+						placeholder="请输入文章名称" aria-label="Search" name="title">
+					<button class="btn btn-outline-success my-2 my-sm-0" type="submit">搜索</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	
+					<a type="button" class="btn btn-info" href="OrderBytime1">按时间</a>	
+					<a type="button" class="btn btn-info" href="OrderByproperty">按性质</a>	
+				</form>
+				</div>
+					<table class="table table-hover">
+						<thead>
+							<tr>
+								<th scope="col">序号</th>
+								<th scope="col">文章名称</th>
+								<th scope="col">文章性质</th>
+								<th scope="col">文章内容</th>
+								<th scope="col">发布时间</th>
+								<th scope="col">操作</th>
+							</tr>
+						</thead>
+						<tbody>
+							<c:forEach items="${articleList}" var="user" varStatus="i">
+								<tr>
+									<th scope="row">${i.count}</th>
+									<td>${user.title}</td>
+									<td>${user.property}</td>
+									<td>${user.content}</td>
+									<td>${user.sdftime}</td>
+									<td>
+										<a type="button" class="btn btn-success" href="ArticledetailServlet?id=${user.id}">查看详情</a>										
+									</td>	
+
+								</tr>   
+							</c:forEach>
+						</tbody>
+					</table>
+
+				</div>
+			</div>
+
+
+		</div>
+
+	</div>
+	
+	
+</body>
+</html>
