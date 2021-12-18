@@ -1,18 +1,20 @@
 const express = require("express")
 const app = express()
 const ejs = require('ejs')
-const mongoose = require('mongoose');
-mongoose.connect('mongodb://172.21.2.236:27017/190110910804');
-const schema={
-    name:String,
-    age:Number,
-    health:String,
-    hobby:String
-}
-const mydata = mongoose.model('cat1s', schema);
+// const mongoose = require('mongoose');
+// mongoose.connect('mongodb://172.21.2.236:27017/190110910804');
+// const schema={
+//     name:String,
+//     age:Number,
+//     health:String,
+//     hobby:String
+// }
+// const mydata = mongoose.model('cat1s', schema);
 // const kitty = new mydata({ name: 'testZildjian2' });
 // kitty.save().then(() => console.log('testmeow1'));
-app.use('/',express.static('login'))
+app.use('/',express.static('public'))
+app.use(express.json()) // for parsing application/json
+app.use(express.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
 // app.get('/input',function(req,res,next){
 //     dataA = parseFloat(req.query.fname);
 //     dataB = parseFloat(req.query.fname1);
