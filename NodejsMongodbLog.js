@@ -13,7 +13,7 @@ const ejs = require('ejs')
 // const kitty = new mydata({ name: 'testZildjian2' });
 // kitty.save().then(() => console.log('testmeow1'));
 app.use('/',express.static('public'))
-app.use('/public',express.static('favicon.ico'))
+app.use('/',express.static('logo'))
 app.use(express.json()) // for parsing application/json
 app.use(express.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
 // app.get('/input',function(req,res,next){
