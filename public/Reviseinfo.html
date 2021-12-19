@@ -1,8 +1,10 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-	<meta charset="utf-8">
-	<title>星空</title>
+	<meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>月亮</title>
 	
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" >
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" ></script>
@@ -35,7 +37,7 @@
 				<li class="nav-item dropdown"><a
 					class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
 					role="button" data-toggle="dropdown" aria-haspopup="true"
-					aria-expanded="false"> ${username==null?'未登录':username}</a>
+					aria-expanded="false"> <%=username%></a>
 					
 					
 					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -76,23 +78,16 @@
 						
 			</div>
 			<div class="col-lg-9">
-				<form action="ReviseMyInfoServlet" method="post" 
-					enctype="multipart/form-data">
+				<form action="/ReviseMyInfoAction" method="post" 
+					>
 							<h1 class="h3 mb-3 font-weight-normal">修改个人信息</h1>
-							<p>${info}</p>
+							
 					<div class="form-group row">
 						<label for="inputEmail3" class="col-sm-2 col-form-label">用户名</label>
 						<div class="col-sm-10">
 							<input type="text" class="form-control" id="inputEmail3"
-								name="username" placeholder="${username}" 
+								name="username" placeholder="<%=username%>" 
 								>
-						</div>
-					</div>
-					<div class="form-group row">
-						<label for="inputPassword3" class="col-sm-2 col-form-label">密码</label>
-						<div class="col-sm-10">
-							<input type="password" class="form-control" id="inputPassword3"
-								name="password" placeholder="请输入密码...">
 						</div>
 					</div>
 					<fieldset class="form-group">
@@ -153,13 +148,6 @@
 								<input class="form-check-input" type="checkbox" name="talent"
 									id="inlineCheckbox4" value="pascal"> <label
 									class="form-check-label" for="inlineCheckbox4">pascal</label>
-							</div>
-						</div>
-						<div class="form-group row">
-							<label for="inputPassword3" class="col-sm-5 col-form-label">个人照片</label>
-							<div class="col-sm-7">
-								<input type="file" class="form-control-file"
-									id="exampleFormControlFile1" name="photo">
 							</div>
 						</div>
 						<div class="col-sm-10">

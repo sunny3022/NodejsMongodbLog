@@ -244,4 +244,66 @@ app.use('/MyInfo',function(req,res,next){
                     
     });
 })  
+app.use('/Reviseinfo',function(req,res,next){
+    console.log(req.body);
+    usr = usr
+    ejs.renderFile('public/Reviseinfo.html', {username:usr},function(err, str){
+        // str => 输出渲染后的 HTML 字符串
+        if(err) {
+            console.log('File is error.')
+        }else{
+                    //  res.statusCode = 200;
+            res.setHeader('Content-Type','text/html');
+            res.end(str)
+        }
+                    
+    });
+})  
+
+
+app.post('/ReviseMyInfoAction',function(req,res,next){
+    console.log(req.body);
+    username = String(req.body.username);
+    se = String(req.body.sex);
+    bth = String(req.body.birth);
+    maj = String(req.body.major);
+    tal =String(req.body.talent);
+    next();
+})   
+
+app.use('/ReviseMyInfoAction',function(req,res,next){
+    userdata.findOne({ username: usr }, 'id', function (err, userdata1) {
+        if (err) return handleError(err);
+        // Prints "Space Ghost is a talk show host".
+        console.log(userdata1.id)
+        id = userdata1.id
+        userdata.findById(id, function (err, userdata2) {
+            if (err) return handleError(err);
+          
+            userdata2.sex = se;
+            userdata2.birth = bth;
+            userdata2.talent =tal;
+            userdata2.major = maj;
+            userdata2.save(function (err, updatedUserdata) {
+              if (err) return handleError(err);
+            //    res.send(updatedUserdata);
+            });
+          });
+        ejs.renderFile('public/Reviseinfo.html', {username:usr},function(err, str){
+            // str => 输出渲染后的 HTML 字符串
+            if(err) {
+                console.log('File is error.')
+            }else{
+                        //  res.statusCode = 200;
+                res.setHeader('Content-Type','text/html');
+                res.end(str)
+            }
+      
+        }); 
+            // userdata.update({ "username": user }, { $set: { "password": npwd }});
+            console.log("修改成功")
+    })
+})   
+
+
 app.listen(1804)
