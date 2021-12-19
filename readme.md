@@ -8,3 +8,7 @@
 修改部分html页面
 5.reg function finished
 完成注册功能，即数据的写入功能
+6.ADD bokeindex.html
+将博客首页添加到public文件夹
+7.login function finished
+完成登陆功能

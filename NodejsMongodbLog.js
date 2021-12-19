@@ -110,7 +110,44 @@ app.use('/LoginAction', function (req, res, next) {
         }
     });
 });
-   
-    
-
+app.post('/ForgetPwdAction',function(req,res,next){
+    console.log(req.body);
+    usr = String(req.body.username);
+    oper =String(req.body.submit1)
+    next();
+})           
+app.use('/ForgetPwdAction', function (req, res, next) {
+    userdata.findOne({ username: usr }, 'password', function (err, userdata) {
+        if (err) return handleError(err);
+        // Prints "Space Ghost is a talk show host".
+        if(oper=='find'){
+            ejs.renderFile('public/forgetPwd.html', {password:userdata.password},function(err, str){
+                // str => 输出渲染后的 HTML 字符串
+                if(err) {
+                    console.log('File is error.')
+                }else{
+                            //  res.statusCode = 200;
+                    res.setHeader('Content-Type','text/html');
+                    res.end(str)
+                }
+                            
+            });
+        }else{
+            ejs.renderFile('public/index.html', function(err, str){
+                // str => 输出渲染后的 HTML 字符串
+                if(err) {
+                    console.log('File is error.')
+                }else{
+                            //  res.statusCode = 200;
+                    res.setHeader('Content-Type','text/html');
+                    res.end(str)
+                }
+          
+            }); 
+        }
+            
+      
+        
+    });
+});
 app.listen(1804)
