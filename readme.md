@@ -12,3 +12,5 @@
 将博客首页添加到public文件夹
 7.login function finished
 完成登陆功能
+8.forgetpassword function finished
+忘记密码功能完成

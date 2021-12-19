@@ -82,7 +82,7 @@ app.use('/LoginAction', function (req, res, next) {
         if (err) return handleError(err);
         // Prints "Space Ghost is a talk show host".
         if(pwd == userdata.password){
-            ejs.renderFile('public/bokeindex.html', function(err, str){
+            ejs.renderFile('public/bokeindex.html', {username:usr},function(err, str){
                 // str => 输出渲染后的 HTML 字符串
                 if(err) {
                     console.log('File is error.')
