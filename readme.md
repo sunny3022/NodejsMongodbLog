@@ -14,5 +14,7 @@
 完成登陆功能
 8.forgetpassword function finished
 忘记密码功能完成
-9.editpassword function finished
+9.ADD forgetPwd.html
+将修改密码界面添加到public文件夹
+10.editpassword function finished
 修改密码功能完成

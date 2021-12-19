@@ -224,4 +224,24 @@ app.use('/Edit', function (req, res, next) {
         
     });
 });
+app.use('/MyInfo',function(req,res,next){
+    userdata.findOne({ username: usr }, 'sex birth major talent', function (err, userdata1) {
+        console.log(userdata1)
+        if (err) return handleError(err);
+        else{
+            ejs.renderFile('public/userInfo.html', {username:usr,sex:userdata1.sex,birth:userdata1.birth,major:userdata1.major,talent:userdata1.talent},function(err, str){
+                // str => 输出渲染后的 HTML 字符串
+                if(err) {
+                    console.log('File is error.')
+                }else{
+                            //  res.statusCode = 200;
+                    res.setHeader('Content-Type','text/html');
+                    res.end(str)
+                }
+            });
+        }
+    
+                    
+    });
+})  
 app.listen(1804)

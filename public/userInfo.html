@@ -1,8 +1,10 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-	<meta charset="utf-8">
-	<title>星空</title>
+	<meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>月亮</title>
 	
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" >
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" ></script>
@@ -34,7 +36,7 @@
 				<li class="nav-item dropdown"><a
 					class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
 					role="button" data-toggle="dropdown" aria-haspopup="true"
-					aria-expanded="false"> ${username==null?'未登录':username}</a>
+					aria-expanded="false"> </a>
 					
 					
 					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -62,7 +64,7 @@
 					<a href="MyAllReviewServlet" class="list-group-item list-group-item-action">修改/删除评论</a>
 					<a href="MyInfo" class="list-group-item list-group-item-action">我的信息</a>
 				
-					<a href="login_out" class="list-group-item list-group-item-action">登出</a>
+					<a href="login.html" class="list-group-item list-group-item-action">登出</a>
 				</ul>
 				<div class="card">
 					<ul class="list-group list-group-flush">
@@ -78,13 +80,11 @@
 					<div class="col-lg-8">
 						<ul class="list-group">
 							<li class="list-group-item">用户信息</li>
-							<li class="list-group-item list-group-item-primary"><p>用户名：${user.username}</p></li>
-							<li class="list-group-item list-group-item-secondary"><p>ip地址：${user.ip}</p></li>
-							<li class="list-group-item list-group-item-success"><p>注册时间:${user.sdftime}</p></li>
-							<li class="list-group-item list-group-item-danger"><p>生日:${user.birth}</li>
-							<li class="list-group-item list-group-item-warning"><p>性别：${user.sex}</li>
-							<li class="list-group-item list-group-item-info"><p>专业：${user.major}</li>
-							<li class="list-group-item list-group-item-light"><p>特长：${user.talent}</li>
+							<li class="list-group-item list-group-item-primary"><p>用户名：<%=username%></p></li>
+							<li class="list-group-item list-group-item-danger"><p>生日:<%=birth%></p></li>
+							<li class="list-group-item list-group-item-warning"><p>性别：<%=sex%></p></li>
+							<li class="list-group-item list-group-item-info"><p>专业：<%=major%></p></li>
+							<li class="list-group-item list-group-item-light"><p>特长：<%=talent%></p></li>
 					
 						</ul>												
 					</div>
