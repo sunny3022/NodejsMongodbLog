@@ -37,7 +37,7 @@
 				<li class="nav-item dropdown"><a
 					class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
 					role="button" data-toggle="dropdown" aria-haspopup="true"
-					aria-expanded="false"> ${username==null?'未登录':username}</a>
+					aria-expanded="false"><%=username%></a>
 					
 					
 					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -85,19 +85,19 @@
 							</tr>
 						</thead>
 						<tbody>
-							<c:forEach items="${articleList}" var="user" varStatus="i">
+							<% for(var i = 0;i < myarlist.length;i++ ){%>
 								<tr>
-									<th scope="row">${i.count}</th>
-									<td>${user.title}</td>
-									<td>${user.property}</td>
-									<td>${user.content}</td>
-									<td>${user.sdftime}</td>
+									<td ><%=myarlist[0]._id%></td>
+									<td><%=myarlist[i].title%></td>
+									<td><%=myarlist[i].property%></td>
+									<td><%=myarlist[i].content%></td>
+									<td><%=myarlist[i].time%></td>
 									<td>
-										<a type="button" class="btn btn-success" href="ArticledetailServlet?id=${user.id}">查看详情</a>										
+										<a type="button" class="btn btn-success" href="/ArticledetailServlet">查看详情</a>										
 									</td>	
 
 								</tr>   
-							</c:forEach>
+								<% } %>
 						</tbody>
 					</table>
 
