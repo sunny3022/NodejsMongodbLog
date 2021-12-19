@@ -18,7 +18,7 @@ const schema={
     major:String,
     talent:String
 }
-
+var usr;
 
 app.post('/RegAction',function(req,res,next){
     console.log(req.body);
@@ -134,6 +134,80 @@ app.use('/ForgetPwdAction', function (req, res, next) {
             });
         }else{
             ejs.renderFile('public/index.html', function(err, str){
+                // str => 输出渲染后的 HTML 字符串
+                if(err) {
+                    console.log('File is error.')
+                }else{
+                            //  res.statusCode = 200;
+                    res.setHeader('Content-Type','text/html');
+                    res.end(str)
+                }
+          
+            }); 
+        }
+            
+      
+        
+    });
+});
+
+app.use('/EditPwd',function(req,res,next){
+    console.log(req.body);
+    usr = usr
+    ejs.renderFile('public/editPwd.html', {username:usr},function(err, str){
+        // str => 输出渲染后的 HTML 字符串
+        if(err) {
+            console.log('File is error.')
+        }else{
+                    //  res.statusCode = 200;
+            res.setHeader('Content-Type','text/html');
+            res.end(str)
+        }
+                    
+    });
+})  
+app.post('/Edit',function(req,res,next){
+    console.log(req.body);
+    user = String(req.body.username);
+    opwd = String(req.body.oldPwd);
+    npwd = String(req.body.newPwd);
+    next();
+})   
+app.use('/Edit', function (req, res, next) {
+    
+    userdata.findOne({ username: user }, 'id password', function (err, userdata1) {
+        if (err) return handleError(err);
+        // Prints "Space Ghost is a talk show host".
+    console.log(userdata1.password)
+    console.log(userdata1.id)
+    id = userdata1.id
+    if(opwd==userdata1.password){
+        console.log(npwd)
+        console.log(user)
+        userdata.findById(id, function (err, userdata2) {
+            if (err) return handleError(err);
+          
+            userdata2.password = npwd;
+            userdata2.save(function (err, updatedUserdata) {
+              if (err) return handleError(err);
+            //   res.send(updatedUserdata);
+            });
+          });
+          ejs.renderFile('public/editPwd.html', {username:usr},function(err, str){
+            // str => 输出渲染后的 HTML 字符串
+            if(err) {
+                console.log('File is error.')
+            }else{
+                        //  res.statusCode = 200;
+                res.setHeader('Content-Type','text/html');
+                res.end(str)
+            }
+      
+        }); 
+            // userdata.update({ "username": user }, { $set: { "password": npwd }});
+            console.log("修改成功")
+        }else{
+            ejs.renderFile('public/editPwd.html', {username:usr},function(err, str){
                 // str => 输出渲染后的 HTML 字符串
                 if(err) {
                     console.log('File is error.')
