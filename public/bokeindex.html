@@ -26,24 +26,21 @@
 		<div class="collapse navbar-collapse" id="navbarSupportedContent">
 			<ul class="navbar-nav mr-auto">
 			
-				<li class="nav-item active"><a class="nav-link" href="AllArticleServlet">首页</a></li>
-				<li class="nav-item"><a class="nav-link" href="MyArticleServlet">我的帖子</a></li>
+				<li class="nav-item active"><a class="nav-link" href="bokeindex.html">首页</a></li>
+				<li class="nav-item"><a class="nav-link" href="MyArticle.html">我的帖子</a></li>
 				
-				<li class="nav-item"><a class="nav-link " href="Mymanagement.jsp">我的管理</a></li>
-				
-					
-				<li class="nav-item"><a class="nav-link " href="login.jsp">点我登录</a></li>
+				<li class="nav-item"><a class="nav-link " href="Mymanagement.html">我的管理</a></li>
 				<li class="nav-item dropdown"><a
 					class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
 					role="button" data-toggle="dropdown" aria-haspopup="true"
-					aria-expanded="false"> ${username==null?'未登录':username}</a>
+					aria-expanded="false"><%=username%> </a>
 					
 					
 					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-						<a class="dropdown-item" href="MyInfo">我的信息</a> <a
-							class="dropdown-item" href="editPwd.jsp">修改密码</a>
+						<a class="dropdown-item" href="userInfo.html">我的信息</a> <a
+							class="dropdown-item" href="editPwd.html">修改密码</a>
 						<div class="dropdown-divider"></div>
-						<a class="dropdown-item" href="login_out">注销</a>
+						<a class="dropdown-item" href="index.html">注销</a>
 					</div>
 				
 					
