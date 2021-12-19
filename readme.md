@@ -6,3 +6,5 @@
 增加注册页面
 4.logo and html revised
 修改部分html页面
+5.reg function finished
+完成注册功能，即数据的写入功能
