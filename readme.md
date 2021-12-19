@@ -18,3 +18,9 @@
 将修改密码界面添加到public文件夹
 10.editpassword function finished
 修改密码功能完成
+11.ADD userInfo.html
+将用户信息界面添加到public文件夹
+12.ADD Reviseinfo.html
+将修改用户信息届买年添加到oublic文件夹
+13.Revise private info function finished
+修改用户信息功能完成

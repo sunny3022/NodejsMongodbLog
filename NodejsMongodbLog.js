@@ -18,6 +18,14 @@ const schema={
     major:String,
     talent:String
 }
+const schema1={
+    title:String,
+    property:String,
+    content:String,
+    time:String,
+    author:String,
+    readcount:String
+}
 var usr;
 
 app.post('/RegAction',function(req,res,next){
@@ -304,6 +312,45 @@ app.use('/ReviseMyInfoAction',function(req,res,next){
             console.log("修改成功")
     })
 })   
+const articledata = mongoose.model('articledatas', schema1);
+app.use('/Mymanagement',function(req,res,next){
+    console.log(req.body);
+    usr = usr
+    ejs.renderFile('public/Mymanagement.html', {username:usr},function(err, str){
+        // str => 输出渲染后的 HTML 字符串
+        if(err) {
+            console.log('File is error.')
+        }else{
+                    //  res.statusCode = 200;
+            res.setHeader('Content-Type','text/html');
+            res.end(str)
+        }
+                    
+    });
+})  
 
-
+app.post('/PublishAction',function(req,res,next){
+    var myDate = new Date();
+    console.log(req.body);
+    tit = String(req.body.title);
+    pro = String(req.body.property);
+    con = String(req.body.content);
+    tim = String(myDate)
+    next();
+}) 
+app.use('/PublishAction',function(req,res,next){
+    const kitty = new articledata({ title:tit,property:pro,author:usr,content:con,time:tim,readcount:"0"});
+        kitty.save().then(() => console.log('testmeow1'));        
+        ejs.renderFile('public/Mymanagement.html',{username:usr}, function(err, str){
+                        // str => 输出渲染后的 HTML 字符串
+            if(err) {
+                console.log('File is error.')
+            }else{
+                          //  res.statusCode = 200;
+                res.setHeader('Content-Type','text/html');
+                res.end(str)
+            }
+                        
+        });
+}) 
 app.listen(1804)
