@@ -19,31 +19,98 @@ const schema={
     talent:String
 }
 
+
 app.post('/RegAction',function(req,res,next){
     console.log(req.body);
+   
+// userdata.deleteMany({ sex: 'boy' }, function (err) {
+//     if (err) return handleError(err);
+//     // removed!
+//   });
+  
     usr = String(req.body.username);
     pwd = String(req.body.password);
     se = String(req.body.sex);
     bth = String(req.body.birth);
     maj = String(req.body.major);
     tal =String(req.body.talent);
+    oper =String(req.body.submit1)
+    console.log(oper)
     next();
 })
+
 const userdata = mongoose.model('userdatas', schema);
 app.use('/RegAction', function (req, res, next) {
-    const kitty = new userdata({ username:usr,password:pwd,sex:se,birth:bth,major:maj,talent:tal});
-    kitty.save().then(() => console.log('testmeow1'));        
-    ejs.renderFile('public/reg.html', function(err, str){
+    if(oper == 'return'){
+        ejs.renderFile('public/index.html', function(err, str){
                     // str => 输出渲染后的 HTML 字符串
         if(err) {
             console.log('File is error.')
         }else{
-                      //  res.statusCode = 200;
+                    //  res.statusCode = 200;
             res.setHeader('Content-Type','text/html');
             res.end(str)
         }
                     
-    });
+        });
+    }
+    else{
+        const kitty = new userdata({ username:usr,password:pwd,sex:se,birth:bth,major:maj,talent:tal});
+        kitty.save().then(() => console.log('testmeow1'));        
+        ejs.renderFile('public/reg.html', function(err, str){
+                        // str => 输出渲染后的 HTML 字符串
+            if(err) {
+                console.log('File is error.')
+            }else{
+                          //  res.statusCode = 200;
+                res.setHeader('Content-Type','text/html');
+                res.end(str)
+            }
+                        
+        });
+    }
+    
 })
-            
+app.post('/LoginAction',function(req,res,next){
+    console.log(req.body);
+    usr = String(req.body.username);
+    pwd = String(req.body.password);
+    next();
+})           
+app.use('/LoginAction', function (req, res, next) {
+    userdata.findOne({ username: usr }, 'password', function (err, userdata) {
+        if (err) return handleError(err);
+        // Prints "Space Ghost is a talk show host".
+        if(pwd == userdata.password){
+            ejs.renderFile('public/bokeindex.html', function(err, str){
+                // str => 输出渲染后的 HTML 字符串
+                if(err) {
+                    console.log('File is error.')
+                }else{
+                            //  res.statusCode = 200;
+                    res.setHeader('Content-Type','text/html');
+                    res.end(str)
+                }
+                            
+            });
+        }
+        else{
+            alert("your password is wrong");
+            ejs.renderFile('public/index.html', function(err, str){
+                // str => 输出渲染后的 HTML 字符串
+                if(err) {
+                    console.log('File is error.')
+                }else{
+                            //  res.statusCode = 200;
+                    res.setHeader('Content-Type','text/html');
+                    res.end(str)
+                }
+          
+            });
+        }
+    });
+});
+   
+    
+
 app.listen(1804)
