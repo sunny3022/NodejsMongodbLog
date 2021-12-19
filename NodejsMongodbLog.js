@@ -12,38 +12,38 @@ app.use(express.json()) // for parsing application/json
 app.use(express.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
 const schema={
     username:String,
-    password:Number,
+    password:String,
     sex:String,
     birth:String,
     major:String,
     talent:String
 }
-app.use('/RegAction',function(req,res,next){
+
+app.post('/RegAction',function(req,res,next){
     console.log(req.body);
-    username = parseFloat(req.body.username);
-    password = parseFloat(req.body.password);
+    usr = String(req.body.username);
+    pwd = String(req.body.password);
+    se = String(req.body.sex);
+    bth = String(req.body.birth);
+    maj = String(req.body.major);
+    tal =String(req.body.talent);
     next();
 })
-// app.post('/input',function(req,res,next){
-//     username = parseFloat(req.body.username);
-//     password = parseFloat(req.body.password);
-//     next();
-// })
-// app.use('/input', function (req, res, next) {
-//             if(oper == '+'){
-//                 ejs.renderFile('result.html', {result:cal.add_ab(parseFloat(dataA),parseFloat(dataB))}, function(err, str){
-//                     // str => 输出渲染后的 HTML 字符串
-//                     if(err) {
-//                         console.log('File is error.')
-//                     }else{
-//                       //  res.statusCode = 200;
-//                         res.setHeader('Content-Type','text/html');
-//                         res.end(str)
-//                     }
+const userdata = mongoose.model('userdatas', schema);
+app.use('/RegAction', function (req, res, next) {
+    const kitty = new userdata({ username:usr,password:pwd,sex:se,birth:bth,major:maj,talent:tal});
+    kitty.save().then(() => console.log('testmeow1'));        
+    ejs.renderFile('public/reg.html', function(err, str){
+                    // str => 输出渲染后的 HTML 字符串
+        if(err) {
+            console.log('File is error.')
+        }else{
+                      //  res.statusCode = 200;
+            res.setHeader('Content-Type','text/html');
+            res.end(str)
+        }
                     
-//                 });
-//             }
+    });
+})
             
-
-//       })
 app.listen(1804)
