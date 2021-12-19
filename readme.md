@@ -28,3 +28,7 @@
 将发表文章界面添加到public文件夹
 15.publish passages funciton finished
 发表文章功能完成
+16.ADD Myarticle.html
+将查看个人文章界面添加到public文件夹
+17.view private passages function finished
+查看个人文章功能完成 
