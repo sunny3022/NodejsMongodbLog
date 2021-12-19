@@ -356,7 +356,7 @@ app.use('/PublishAction',function(req,res,next){
 app.use('/MyArticle',function(req,res,next){
     console.log(req.body);
     usr = usr
-    articledata.find({ username: usr }, 'id title property content time', function (err, userdata1) {
+    articledata.find({ author: usr }, 'id title property content time', function (err, userdata1) {
         console.log(userdata1)
         ejs.renderFile('public/MyArticle.html', {username:usr,myarlist:userdata1},function(err, str){
             // str => 输出渲染后的 HTML 字符串
@@ -370,5 +370,98 @@ app.use('/MyArticle',function(req,res,next){
                         
         });
     });
+}) 
+
+var tit
+app.post('/SearchBytitle1',function(req,res,next){
+    console.log(req.body);
+    tit = String(req.body.title);
+    next();
+})
+app.use('/SearchBytitle1',function(req,res,next){
+    console.log(req.body);
+    usr = usr
+    articledata.find({ author: usr ,title:tit}, 'id title property content time', function (err, userdata1) {
+        console.log(userdata1)
+        ejs.renderFile('public/MyArticle.html', {username:usr,myarlist:userdata1},function(err, str){
+            // str => 输出渲染后的 HTML 字符串
+            if(err) {
+                console.log('File is error.')
+            }else{
+                        //  res.statusCode = 200;
+                res.setHeader('Content-Type','text/html');
+                res.end(str)
+            }
+                        
+        });
+    });
+}) 
+app.use('/OrderBytime1',function(req,res,next){
+    console.log(req.body);
+    usr = usr
+    if(tit == null){
+        articledata.find({ author: usr }, 'id title property content time', function (err, userdata1) {
+            console.log(userdata1)
+            ejs.renderFile('public/MyArticle.html', {username:usr,myarlist:userdata1},function(err, str){
+                // str => 输出渲染后的 HTML 字符串
+                if(err) {
+                    console.log('File is error.')
+                }else{
+                            //  res.statusCode = 200;
+                    res.setHeader('Content-Type','text/html');
+                    res.end(str)
+                }                          
+            });
+        }).sort({ time:1 });
+    }else{
+        articledata.find({ author: usr ,title:tit}, 'id title property content time', function (err, userdata1) {
+            console.log(userdata1)
+            ejs.renderFile('public/MyArticle.html', {username:usr,myarlist:userdata1},function(err, str){
+                // str => 输出渲染后的 HTML 字符串
+                if(err) {
+                    console.log('File is error.')
+                }else{
+                            //  res.statusCode = 200;
+                    res.setHeader('Content-Type','text/html');
+                    res.end(str)
+                }                          
+            });
+        }).sort({ time:1 });
+    }
+    
+}) 
+app.use('/OrderByproperty',function(req,res,next){
+    console.log(req.body);
+    usr = usr
+    if(tit == null){
+        articledata.find({ author: usr }, 'id title property content time', function (err, userdata1) {
+            console.log(userdata1)
+            ejs.renderFile('public/MyArticle.html', {username:usr,myarlist:userdata1},function(err, str){
+                // str => 输出渲染后的 HTML 字符串
+                if(err) {
+                    console.log('File is error.')
+                }else{
+                            //  res.statusCode = 200;
+                    res.setHeader('Content-Type','text/html');
+                    res.end(str)
+                }
+                            
+            });
+        }).sort({ property:1 });
+    }else{
+        articledata.find({ author:usr,title:tit}, 'id title property content time', function (err, userdata1) {
+            console.log(userdata1)
+            ejs.renderFile('public/MyArticle.html', {username:usr,myarlist:userdata1},function(err, str){
+                // str => 输出渲染后的 HTML 字符串
+                if(err) {
+                    console.log('File is error.')
+                }else{
+                            //  res.statusCode = 200;
+                    res.setHeader('Content-Type','text/html');
+                    res.end(str)
+                }
+            });
+        }).sort({ property:1 });
+    }
 }) 
 app.listen(1804)
