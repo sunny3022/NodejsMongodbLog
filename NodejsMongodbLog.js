@@ -95,7 +95,7 @@ app.use('/LoginAction', function (req, res, next) {
             });
         }
         else{
-            alert("your password is wrong");
+            console.log("your password is wrong");
             ejs.renderFile('public/index.html', function(err, str){
                 // str => 输出渲染后的 HTML 字符串
                 if(err) {
