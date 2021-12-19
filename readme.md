@@ -21,6 +21,10 @@
 11.ADD userInfo.html
 将用户信息界面添加到public文件夹
 12.ADD Reviseinfo.html
-将修改用户信息届买年添加到oublic文件夹
+将修改用户信息届买年添加到public文件夹
 13.Revise private info function finished
 修改用户信息功能完成
+14.ADD Mymanagement.html
+将发表文章界面添加到public文件夹
+15.publish passages funciton finished
+发表文章功能完成

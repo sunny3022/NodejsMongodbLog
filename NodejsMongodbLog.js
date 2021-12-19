@@ -353,4 +353,20 @@ app.use('/PublishAction',function(req,res,next){
                         
         });
 }) 
+app.use('/MyArticle',function(req,res,next){
+    console.log(req.body);
+    usr = usr
+    articledata.find({ username: usr }, 'id title content ', function (err, userdata1) {
+    ejs.renderFile('public/MyArticle.html', {username:usr},function(err, str){
+        // str => 输出渲染后的 HTML 字符串
+        if(err) {
+            console.log('File is error.')
+        }else{
+                    //  res.statusCode = 200;
+            res.setHeader('Content-Type','text/html');
+            res.end(str)
+        }
+                    
+    });
+}) 
 app.listen(1804)
