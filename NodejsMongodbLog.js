@@ -616,21 +616,22 @@ app.use('/OrderBytime',function(req,res,next){
 app.use('/ModDelArticle',function(req,res,next){
     console.log(req.body);
     usr = usr
-    countofau =  articledata.find({author:usr}).count()
-    countofyuan = articledata.find({author:usr,property:"原创"}).count()
     articledata.find({ author: usr }, 'id title property content time', function (err, userdata1) {
         console.log(userdata1)
-        ejs.renderFile('public/Modify_delete_articles.html', {username:usr,countofauthor:countofau,countofyuanchuang:countofyuan, myarlist:userdata1},function(err, str){
-            // str => 输出渲染后的 HTML 字符串
-            if(err) {
-                console.log('File is error.')
-            }else{
-                        //  res.statusCode = 200;
-                res.setHeader('Content-Type','text/html');
-                res.end(str)
-            }
-                        
-        });
+        articledata.find({author:usr,property:"原创"},function (err, userdata2){
+            ejs.renderFile('public/Modify_delete_articles.html', {username:usr, myarlist:userdata1,counta:userdata2},function(err, str){
+                // str => 输出渲染后的 HTML 字符串
+                if(err) {
+                    console.log('File is error.')
+                }else{
+                            //  res.statusCode = 200;
+                    res.setHeader('Content-Type','text/html');
+                    res.end(str)
+                }
+                            
+            });
+        })
+        
     });
 }) 
 

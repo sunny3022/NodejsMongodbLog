@@ -38,7 +38,7 @@
 				<li class="nav-item dropdown"><a
 					class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
 					role="button" data-toggle="dropdown" aria-haspopup="true"
-					aria-expanded="false"> ${username==null?'未登录':username}</a>
+					aria-expanded="false"> <%=username%></a>
 					
 					
 					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -80,7 +80,7 @@
 			</div>
 			<div class="col-lg-9">
 			<div class="alert alert-primary" role="alert">
-					 <p>总文章数：${countofauthor} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;原创：${countofyuanchuang}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;摘自：${countofzhaizi}</p>
+					 <p>总文章数：<%=myarlist.length%>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;原创：<%=counta.length%>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;摘自：<%=myarlist.length-counta.length%></p>
 					</div>
 				<div class="row">
 					
@@ -97,13 +97,13 @@
 							</tr>
 						</thead>
 						<tbody>
-							<c:forEach items="${myarticleList}" var="user" varStatus="i">
+							<% for(var i = 0;i < myarlist.length;i++ ){%>
 								<tr>
-									<th scope="row">${i.count}</th>
-									<td>${user.title}</td>
-									<td>${user.property}</td>
-									<td>${user.content}</td>
-									<td>${user.sdftime}</td>
+									<th scope="row"><%=myarlist[i]._id%></th>
+									<td><%=myarlist[i].title%></td>
+									<td><%=myarlist[i].property%></td>
+									<td><%=myarlist[i].content%></td>
+									<td><%=myarlist[i].time%></td>
 								
 		
 									<td>
@@ -112,7 +112,7 @@
 									</td>
 									
 								</tr>   
-							</c:forEach>
+								<% } %>
 						</tbody>
 					</table>
 

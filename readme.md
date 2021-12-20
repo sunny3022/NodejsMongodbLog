@@ -32,3 +32,7 @@
 将查看个人文章界面添加到public文件夹
 17.view private passages function finished
 查看个人文章功能完成 
+18.ADD Articledetail
+添加Articledetail文件夹
+19.view all passages and order function finished
+查看所有人的文章和按作者、时间排序功能完成 
