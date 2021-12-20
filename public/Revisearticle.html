@@ -1,8 +1,10 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-	<meta charset="utf-8">
-	<title>星空</title>
+	<meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>月亮</title>
 	
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" >
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" ></script>
@@ -14,7 +16,7 @@
 <body>
 	<nav class="navbar navbar-expand-lg navbar-light bg-light" >
 		<!-- Just an image -->
-		<img src="photo/mm.jpg" width="30" height="30" alt=""> 
+		<img src="mm.jpg" width="30" height="30" alt=""> 
 		<button class="navbar-toggler" type="button" data-toggle="collapse"
 			data-target="#navbarSupportedContent"
 			aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -35,7 +37,7 @@
 				<li class="nav-item dropdown"><a
 					class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
 					role="button" data-toggle="dropdown" aria-haspopup="true"
-					aria-expanded="false"> ${username==null?'未登录':username}</a>
+					aria-expanded="false"> <%=username%></a>
 					
 					
 					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -76,15 +78,14 @@
 					
 			</div>
 			<div class="col-lg-9">
-				<form action="ReviseArticleServlet" method="post"
+				<form action="/ReviseArticleAction/<%=id%>" method="post"
 					>
 							<h1 class="h3 mb-3 font-weight-normal">修改文章</h1>
-							<p >${info}</p>
 					<div class="form-group row">
 						<label for="inputEmail3" class="col-sm-2 col-form-label">题目</label>
 						<div class="col-sm-10">
 							<input type="text" class="form-control" id="inputEmail3"
-								name="title" placeholder="${title}" 
+								name="title" placeholder="<%=title%>" 
 								>
 						</div>
 					</div>
@@ -108,14 +109,15 @@
 					<div class="form-group row">
 						<label for="inputEmail3" class="col-sm-2 col-form-label">内容</label>
 						<div class="col-sm-10">
-						        <textarea cols="100%" rows="20" placeholder="${content}" name="content" ></textarea>
+						        <textarea cols="100%" rows="20" placeholder="<%=content%>" name="content" ></textarea>
 						</div>
 					</div>
 			
 					<div class="col-sm-10" align="center">
 				
 							<button type="submit" class="btn btn-primary" >修改</button>
-							<a type="button" href="MyAllArticleServlet" class="btn btn-primary" >返回</button>
+							<input type="button" value="返&nbsp;回" class="btn btn-primary"
+							onClick="javascript:window.history.go(-1)">
 					</div>
 						
 				</form>

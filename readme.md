@@ -38,5 +38,7 @@
 查看所有人的文章和按作者、时间排序功能完成 
 20.view the number of my passages function finished
 查看自己文章个数，原创个数、摘抄个数功能完成
-21.Delete passages funtion finished
+21.Delete passages function finished
 删除文章功能成功
+22.Revise passages function finished
+修改文章功能成功
