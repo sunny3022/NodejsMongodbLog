@@ -107,8 +107,13 @@
 								
 		
 									<td>
-											<a type="button" class="btn btn-danger" href="InvalidArticle?id=${user.id}">删除文章</a>
-											<a type="button" class="btn btn-success" href="ReviseArticle?id=${user.id}">修改文章</a>
+										<form action="/InvalidArticle/<%=myarlist[i]._id%>" method="POST">
+											<input type="submit"  class="btn btn-danger" name="submit1" value="删除文章">	
+										</form>		
+										<form action="/ReviseArticle/<%=myarlist[i]._id%>" method="POST">
+											<input type="submit"  class="btn btn-primary" name="submit1" value="修改文章">	
+										</form>	
+										
 									</td>
 									
 								</tr>   

@@ -36,3 +36,5 @@
 添加Articledetail文件夹
 19.view all passages and order function finished
 查看所有人的文章和按作者、时间排序功能完成 
+2.view the number of my passages function finished
+查看自己文章个数，原创个数、摘抄个数功能完成
