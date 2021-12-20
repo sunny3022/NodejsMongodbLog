@@ -336,13 +336,21 @@ app.use('/Mymanagement',function(req,res,next){
 })  
 
 app.post('/PublishAction',function(req,res,next){
-    var myDate = new Date();
 
+    var myDate = new Date();
+    var Y = myDate.getFullYear();
+    var M = myDate.getMonth()+1;
+    var D = myDate.getDate();
+    var h = myDate.getHours(); //获取当前小时数(0-23)  
+    var m = myDate.getMinutes(); //获取当前分钟数(0-59)  
+    var s = myDate.getSeconds(); //获取当前秒数(0-59)  
+    tim =  Y + '-'+ M + '-' + D +' '+h+':'+m+':'+s;
+    console.log(tim)
     console.log(req.body);
     tit = String(req.body.title);
     pro = String(req.body.property);
     con = String(req.body.content);
-    tim = String(myDate)
+ //   tim = String(myDate)
     next();
 }) 
 app.use('/PublishAction',function(req,res,next){
@@ -510,6 +518,99 @@ app.use('/Bokeindex',function(req,res,next){
         });
     })
     
+    
+}) 
+var tit1
+app.post('/SearchBytitle',function(req,res,next){
+    console.log(req.body);
+    tit1 = String(req.body.title);
+    next();
+})
+app.use('/SearchBytitle',function(req,res,next){
+    console.log(req.body);
+    usr = usr
+    articledata.find({ title:tit1}, 'id title property author content time', function (err, userdata1) {
+        console.log(userdata1)
+        ejs.renderFile('public/bokeindex.html', {username:usr,allarlist:userdata1},function(err, str){
+            // str => 输出渲染后的 HTML 字符串
+            if(err) {
+                console.log('File is error.')
+            }else{
+                        //  res.statusCode = 200;
+                res.setHeader('Content-Type','text/html');
+                res.end(str)
+            }
+                        
+        });
+    });
+}) 
+app.use('/OrderByauthor',function(req,res,next){
+    console.log(req.body);
+    usr = usr
+    if(tit1 == null){
+        articledata.find({ }, 'id title property author content time', function (err, userdata1) {
+            console.log(userdata1)
+            ejs.renderFile('public/bokeindex.html', {username:usr,allarlist:userdata1},function(err, str){
+                // str => 输出渲染后的 HTML 字符串
+                if(err) {
+                    console.log('File is error.')
+                }else{
+                            //  res.statusCode = 200;
+                    res.setHeader('Content-Type','text/html');
+                    res.end(str)
+                }                          
+            });
+        }).sort({ author:1 });
+    }else{
+        articledata.find({ title:tit1}, 'id title property author content time', function (err, userdata1) {
+            console.log(userdata1)
+            ejs.renderFile('public/bokeindex.html', {username:usr,allarlist:userdata1},function(err, str){
+                // str => 输出渲染后的 HTML 字符串
+                if(err) {
+                    console.log('File is error.')
+                }else{
+                            //  res.statusCode = 200;
+                    res.setHeader('Content-Type','text/html');
+                    res.end(str)
+                }                          
+            });
+        }).sort({ author:1 });
+    }
+    
+}) 
+
+app.use('/OrderBytime',function(req,res,next){
+    console.log(req.body);
+    usr = usr
+    if(tit1 == null){
+        articledata.find({ }, 'id title property author content time', function (err, userdata1) {
+            console.log(userdata1)
+            ejs.renderFile('public/bokeindex.html', {username:usr,allarlist:userdata1},function(err, str){
+                // str => 输出渲染后的 HTML 字符串
+                if(err) {
+                    console.log('File is error.')
+                }else{
+                            //  res.statusCode = 200;
+                    res.setHeader('Content-Type','text/html');
+                    res.end(str)
+                }                          
+            });
+        }).sort({ time:1 });
+    }else{
+        articledata.find({ title:tit1}, 'id title property author content time', function (err, userdata1) {
+            console.log(userdata1)
+            ejs.renderFile('public/bokeindex.html', {username:usr,allarlist:userdata1},function(err, str){
+                // str => 输出渲染后的 HTML 字符串
+                if(err) {
+                    console.log('File is error.')
+                }else{
+                            //  res.statusCode = 200;
+                    res.setHeader('Content-Type','text/html');
+                    res.end(str)
+                }                          
+            });
+        }).sort({ time:1 });
+    }
     
 }) 
 app.listen(1804)

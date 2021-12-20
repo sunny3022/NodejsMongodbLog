@@ -70,12 +70,12 @@
 			<div class="col-8" >
 			<div>
 				<div>
-				<form class="form-inline my-2 my-lg-0" action="SearchBytitle" method="post">
+				<form class="form-inline my-2 my-lg-0" action="/SearchBytitle" method="post">
 					<input class="form-control mr-sm-2" type="search"
 						placeholder="请输入文章名称" aria-label="Search" name="title">
 					<button class="btn btn-outline-success my-2 my-sm-0" type="submit">搜索</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					<a type="button" class="btn btn-info" href="OrderByauthor">按作者</a>	
-					<a type="button" class="btn btn-info" href="OrderBytime">按时间</a>	
+					<a type="button" class="btn btn-info" href="/OrderByauthor">按作者</a>	
+					<a type="button" class="btn btn-info" href="/OrderBytime">按时间</a>	
 				</form>
 				</div>
 				
@@ -99,8 +99,8 @@
 									<td><%=allarlist[i].time%></td>
 									<td><%=allarlist[i].author%></td>
 									<td>
-										<form action="/Articledetail" method="POST">
-											<input type="submit"  class="btn btn-primary" name="submit1" value="<%=allarlist[i]._id%>">	
+										<form action="/Articledetail/<%=allarlist[i]._id%>" method="POST">
+											<input type="submit"  class="btn btn-primary" name="submit1" value="查看">	
 										</form>			
 									</td>	
 								</tr>   
