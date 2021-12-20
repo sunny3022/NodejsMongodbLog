@@ -16,7 +16,8 @@ const schema={
     sex:String,
     birth:String,
     major:String,
-    talent:String
+    talent:String,
+    identity:String
 }
 const schema1={
     title:String,
@@ -26,8 +27,9 @@ const schema1={
     author:String,
     readcount:String
 }
-var usr;
 
+var usr;
+var ty;
 app.post('/RegAction',function(req,res,next){
     console.log(req.body);
    
@@ -42,7 +44,8 @@ app.post('/RegAction',function(req,res,next){
     bth = String(req.body.birth);
     maj = String(req.body.major);
     tal =String(req.body.talent);
-    oper =String(req.body.submit1)
+    ty = String(req.body.identity);
+    oper =String(req.body.submit1);
     console.log(oper)
     next();
 })
@@ -63,7 +66,7 @@ app.use('/RegAction', function (req, res, next) {
         });
     }
     else{
-        const kitty = new userdata({ username:usr,password:pwd,sex:se,birth:bth,major:maj,talent:tal});
+        const kitty = new userdata({ username:usr,password:pwd,sex:se,birth:bth,major:maj,talent:tal,identity:ty});
         kitty.save().then(() => console.log('testmeow1'));        
         ejs.renderFile('public/reg.html', function(err, str){
                         // str => 输出渲染后的 HTML 字符串
@@ -90,17 +93,20 @@ app.use('/LoginAction', function (req, res, next) {
         if (err) return handleError(err);
         // Prints "Space Ghost is a talk show host".
         if(pwd == userdata.password){
-            ejs.renderFile('public/bokeindex.html', {username:usr},function(err, str){
-                // str => 输出渲染后的 HTML 字符串
-                if(err) {
-                    console.log('File is error.')
-                }else{
-                            //  res.statusCode = 200;
-                    res.setHeader('Content-Type','text/html');
-                    res.end(str)
-                }
-                            
-            });
+            articledata.find({}, 'id title property content time author', function (err, userdata1) {
+                console.log(userdata1)
+                ejs.renderFile('public/bokeindex.html', {username:usr,allarlist:userdata1},function(err, str){
+                    // str => 输出渲染后的 HTML 字符串
+                    if(err) {
+                        console.log('File is error.')
+                    }else{
+                                //  res.statusCode = 200;
+                        res.setHeader('Content-Type','text/html');
+                        res.end(str)
+                    }                          
+                });
+            })
+            
         }
         else{
             console.log("your password is wrong");
@@ -331,6 +337,7 @@ app.use('/Mymanagement',function(req,res,next){
 
 app.post('/PublishAction',function(req,res,next){
     var myDate = new Date();
+
     console.log(req.body);
     tit = String(req.body.title);
     pro = String(req.body.property);
@@ -463,5 +470,46 @@ app.use('/OrderByproperty',function(req,res,next){
             });
         }).sort({ property:1 });
     }
+}) 
+app.post('/Articledetail/:old_id',function(req,res,next){
+    console.log(req.params)
+    arid = String(req.params.old_id);
+    console.log(arid)
+    next();
+    
+}) 
+app.use('/Articledetail',function(req,res,next){
+    articledata.find({ _id: arid}, 'id title property content time author readcount', function (err, userdata1) {
+        console.log(userdata1)
+        ejs.renderFile('public/articledetail.html', {username:usr,author:userdata1[0].author,title:userdata1[0].title,property:userdata1[0].property,content:userdata1[0].content,time:userdata1[0].time,readcount:userdata1[0].readcount},function(err, str){
+            // str => 输出渲染后的 HTML 字符串
+            if(err) {
+                console.log('File is error.')
+            }else{
+                        //  res.statusCode = 200;
+                res.setHeader('Content-Type','text/html');
+                res.end(str)
+            }                          
+        });
+    })
+    
+    
+}) 
+app.use('/Bokeindex',function(req,res,next){
+    articledata.find({}, 'id title property content time author', function (err, userdata1) {
+        console.log(userdata1)
+        ejs.renderFile('public/bokeindex.html', {username:usr,allarlist:userdata1},function(err, str){
+            // str => 输出渲染后的 HTML 字符串
+            if(err) {
+                console.log('File is error.')
+            }else{
+                        //  res.statusCode = 200;
+                res.setHeader('Content-Type','text/html');
+                res.end(str)
+            }                          
+        });
+    })
+    
+    
 }) 
 app.listen(1804)

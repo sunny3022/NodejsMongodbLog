@@ -87,13 +87,16 @@
 						<tbody>
 							<% for(var i = 0;i < myarlist.length;i++ ){%>
 								<tr>
-									<td ><%=myarlist[0]._id%></td>
+									<td id="artid"><%=myarlist[i]._id%></td>
 									<td><%=myarlist[i].title%></td>
 									<td><%=myarlist[i].property%></td>
 									<td><%=myarlist[i].content%></td>
 									<td><%=myarlist[i].time%></td>
+									<td><%=myarlist[i].author%></td>
 									<td>
-										<a type="button" class="btn btn-success" href="/ArticledetailServlet">查看详情</a>										
+										<form action="/Articledetail/<%=myarlist[i]._id%>" method="POST">
+										<input type="submit"  class="btn btn-primary" name="submit1" value="查看">	
+									</form>								
 									</td>	
 
 								</tr>   

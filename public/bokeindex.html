@@ -26,7 +26,7 @@
 		<div class="collapse navbar-collapse" id="navbarSupportedContent">
 			<ul class="navbar-nav mr-auto">
 			
-				<li class="nav-item active"><a class="nav-link" href="bokeindex.html">首页</a></li>
+				<li class="nav-item active"><a class="nav-link" href="/Bokeindex">首页</a></li>
 				<li class="nav-item"><a class="nav-link" href="/MyArticle">我的帖子</a></li>
 				
 				<li class="nav-item"><a class="nav-link " href="/Mymanagement">我的管理</a></li>
@@ -92,17 +92,19 @@
 							</tr>
 						</thead>
 						<tbody>
-							<c:forEach items="${articleList}" var="user" varStatus="i">
+							<% for(var i = 0;i < allarlist.length;i++ ){%>
 								<tr>
-									<th scope="row">${i.count}</th>
-									<td>${user.title}</td>								
-									<td>${user.sdftime}</td>
-									<td>${user.author}</td>
+									<th scope="row"><%=allarlist[i]._id%></th>
+									<td><%=allarlist[i].title%></td>								
+									<td><%=allarlist[i].time%></td>
+									<td><%=allarlist[i].author%></td>
 									<td>
-											<a type="button" class="btn btn-success" href="ArticledetailServlet?id=${user.id}">查看详情</a>										
+										<form action="/Articledetail" method="POST">
+											<input type="submit"  class="btn btn-primary" name="submit1" value="<%=allarlist[i]._id%>">	
+										</form>			
 									</td>	
 								</tr>   
-							</c:forEach>
+								<% } %>
 						</tbody>
 					</table>
 
