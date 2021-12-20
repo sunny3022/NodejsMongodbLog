@@ -664,5 +664,34 @@ app.use('/InvalidArticle',function(req,res,next){
         });
       });
 }) 
+app.post('/ReviseArticle/:old_id',function(req,res,next){
+    console.log(req.params)
+    aid = String(req.params.old_id);
+    console.log(aid)
+    next();
+    
+}) 
+app.use('/InvalidArticle',function(req,res,next){
+    usr = usr
+   
+        articledata.find({ _id: aid }, 'id title property content time', function (err, userdata1) {
+            console.log(userdata1)
+           
+                ejs.renderFile('public/Modify_delete_articles.html', {username:usr, myarlist:userdata1},function(err, str){
+                    // str => 输出渲染后的 HTML 字符串
+                    if(err) {
+                        console.log('File is error.')
+                    }else{
+                                //  res.statusCode = 200;
+                        res.setHeader('Content-Type','text/html');
+                        res.end(str)
+                    }
+                                
+                });
+            
+            
+        });
+
+}) 
 
 app.listen(1804)
