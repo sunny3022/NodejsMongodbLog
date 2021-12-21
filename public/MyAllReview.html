@@ -88,22 +88,23 @@
 							</tr>
 						</thead>
 						<tbody>
-							<c:forEach items="${myreviewList}" var="user" varStatus="i">
+							<% for(var i = 0;i < myreviewList.length;i++ ){%>
 								<tr>
-									<th scope="row">${i.count}</th>
-									<td>${user.review_articleId}</td>
-									<td>${user.review_content}</td>
-									<td>${user.sdftime}</td>
-									
-								
-		
+									<th scope="row"><%=myreviewList[i].id%></th>
+									<td><%=myreviewList[i].review_articleId%></td>
+									<td><%=myreviewList[i].review_content%></td>
+									<td><%=myreviewList[i].review_time%></td>
 									<td>
-											<a type="button" class="btn btn-danger" href="InvalidReview?id=${user.id}">删除评论</a>
-											<a type="button" class="btn btn-success" href="ReviseReview?id=${user.id}">修改评论</a>
+										<form action="/InvalidReview?id=<%=myreviewList[i]._id%>" method="POST">
+											<input type="submit"  class="btn btn-danger" name="submit1" value="删除评论">	
+										</form>		
+										<form action="/ReviseReview?id=<%=myreviewList[i]._id%>" method="POST">
+											<input type="submit"  class="btn btn-primary" name="submit1" value="修改评论">	
+										</form>				
 									</td>
 									
 								</tr>   
-							</c:forEach>
+								<% } %>
 						</tbody>
 					</table>
 
