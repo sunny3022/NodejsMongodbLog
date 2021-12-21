@@ -1091,4 +1091,20 @@ app.use('/ReviseReviewAction',function(req,res,next){
       
         });      
 }) 
+app.use('/DelAllArticle',function(req,res,next){ 
+    articledata.find({ }, 'id title property author content time readcount', function (err, userdata1) {
+        console.log(userdata1)            
+            ejs.renderFile('public/admin/adMymanagement.html', {username:usr, allarlist:userdata1},function(err, str){
+                // str => 输出渲染后的 HTML 字符串
+                if(err) {
+                    console.log('File is error.'+err)
+                }else{
+                            //  res.statusCode = 200;
+                    res.setHeader('Content-Type','text/html');
+                    res.end(str)
+                }
+                            
+            });    
+    });
+}) 
 app.listen(1804)
