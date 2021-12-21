@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>月亮</title>
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" >
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" ></script>
+<script src="https://code.jquery.com/jquery.min.js" ></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" ></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" ></script>
+
+</head>
+<body>
+	<nav class="navbar navbar-expand-lg navbar-light bg-light" >
+		<!-- Just an image -->
+		<img src="../photo/mm.jpg" width="30" height="30" alt=""> 
+		<button class="navbar-toggler" type="button" data-toggle="collapse"
+			data-target="#navbarSupportedContent"
+			aria-controls="navbarSupportedContent" aria-expanded="false"
+			aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+	
+		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+			<ul class="navbar-nav mr-auto">
+			
+				<li class="nav-item active"><a class="nav-link" href="/Bokeindex">首页</a></li>
+				<li class="nav-item"><a class="nav-link " href="/Mymanagement">我的管理</a></li>
+				<li class="nav-item dropdown"><a
+					class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
+					role="button" data-toggle="dropdown" aria-haspopup="true"
+					aria-expanded="false"><%=username%> </a>
+					
+					
+					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+						<a class="dropdown-item" href="/MyInfo">我的信息</a> <a
+							class="dropdown-item" href="/EditPwd">修改密码</a>
+						<div class="dropdown-divider"></div>
+						<a class="dropdown-item" href="index.html">注销</a>
+					</div>
+				
+					
+				</li>
+				</li>
+			</ul>
+			
+		</div>
+	</nav>
+	
+	
+	
+	<div class="container">
+		<!-- 内容  -->
+		<div class="row" style="margin-top: 10px">
+			<div class="col-lg-3">
+				<ul class="list-group">
+					<a href="/DelAllArticle" class="list-group-item list-group-item-action">所有文章</a>
+					<a href="/DelAllReview" class="list-group-item list-group-item-action">所有评论</a>
+					<a href="/DelAllUser" class="list-group-item list-group-item-action">所有用户</a>				
+					<a href="index.html" class="list-group-item list-group-item-action">登出</a>
+				</ul>
+				<div class="card">
+					<ul class="list-group list-group-flush">
+						<li class="list-group-item">欢迎管理员<%=username%>！</li>
+						<li class="list-group-item">学号：190110910804</li>
+						<li class="list-group-item">班级：19计算机2班</li>
+						<li class="list-group-item">姓名：陈蒙蒙</li>
+					</ul>
+				</div>			
+			</div>
+			<div class="col-lg-9">
+				<div class="row">
+					<table class="table table-hover">
+						<thead>
+							<tr>
+								<th scope="col">序号</th>
+								<th scope="col">评论作者</th>
+								<th scope="col">评论内容</th>
+								<th scope="col">发布时间</th>
+								<th scope="col">操作</th>
+							</tr>
+						</thead>
+						<tbody>
+							<% for(var i = 0;i < allreviewList.length;i++ ){%>
+								<tr>
+									<th scope="row"><%=allreviewList[i].id%></th>
+									<td><%=allreviewList[i].review_author%></td>
+									<td><%=allreviewList[i].review_content%></td>
+									<td><%=allreviewList[i].review_time%></td>
+									<td>
+										<form action="/InvalidReview?id=<%=allreviewList[i]._id%>" method="POST">
+											<input type="submit"  class="btn btn-danger" name="submit1" value="删除评论">	
+										</form>					
+									</td>
+									
+								</tr>   
+								<% } %>
+						</tbody>
+					</table>
+
+				</div>
+			</div>
+
+
+		</div>
+
+	</div>
+	
+	
+</body>
+</html>

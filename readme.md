@@ -52,8 +52,15 @@
 修改删除评论功能完成  
 27.common user function finished
 普通用户功能完成
---------------common user 界面功能完成------------------------------------
-28.ADD adbokeindex.html
-添加管理员博客首页界面
-29.ADD adMymanagement.html
-添加管理元管理界面
+--------------common user 界面功能完成------------------------------------  
+28.ADD adbokeindex.html  
+添加管理员博客首页界面到admin文件夹  
+29.ADD adMymanagement.html  
+添加管理员管理界面到admin文件夹    
+30.ADD adarticledetail.html
+添加管理员文章详情界面到admin文件夹  
+31.admin bokeindex function finished
+完成管理员博客首页界面，完成排序、搜索文章等功能
+32.admin view passages and delete passages function finished
+完成管理员查看文章和删除文章功能
+
