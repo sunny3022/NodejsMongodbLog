@@ -775,11 +775,11 @@ app.use('/SendReview',function(req,res,next){
 app.use('/MyAllReview',function(req,res,next){    
        
     reviewdata.find({ review_author: usr}, 'id review_articleId review_author review_content review_time', function (err, userdata1) {
-        console.log(userdata2)
-        ejs.renderFile('public/articledetail.html', {username:usr,arid:userdata1[0].id,author:userdata1[0].author,title:userdata1[0].title,property:userdata1[0].property,content:userdata1[0].content,time:userdata1[0].time,readcount:userdata1[0].readcount,reviewlist:userdata2},function(err, str){
+        console.log(userdata1)
+        ejs.renderFile('public/MyAllReview.html', {username:usr,myreviewList:userdata1},function(err, str){
             // str => 输出渲染后的 HTML 字符串
                 if(err) {
-                    console.log('File is error.')
+                    console.log('File is error.'+err)
                 }else{
                                 //  res.statusCode = 200;
                     res.setHeader('Content-Type','text/html');
@@ -788,5 +788,102 @@ app.use('/MyAllReview',function(req,res,next){
             });
         })
        
+}) 
+app.post('/InvalidReview',function(req,res,next){
+    rid = String(req.query.id);
+    console.log(rid)
+    next();
+    
+}) 
+app.use('/InvalidReview',function(req,res,next){
+    usr = usr
+    reviewdata.deleteOne({ _id: rid }, function (err) {
+        if (err) return handleError(err);
+        reviewdata.find({ author: usr }, 'id review_articleId review_author review_content review_time', function (err, userdata1) {
+            console.log(userdata1)       
+                ejs.renderFile('public/MyAllReview.html', {username:usr, myreviewList:userdata1},function(err, str){
+                    // str => 输出渲染后的 HTML 字符串
+                    if(err) {
+                        console.log('File is error.')
+                    }else{
+                                //  res.statusCode = 200;
+                        res.setHeader('Content-Type','text/html');
+                        res.end(str)
+                    }
+                                
+                });
+        });
+      });
+}) 
+app.post('/ReviseReview',function(req,res,next){
+    rid = String(req.query.id);
+    console.log(rid)
+    next();
+    
+}) 
+app.use('/ReviseArticle',function(req,res,next){
+    usr = usr
+    reviewdata.find({ _id: aid }, 'id review_articleId review_author review_content review_time', function (err, userdata1) {
+            console.log(userdata1)
+                ejs.renderFile('public/Revisearticle.html', {username:usr, id:userdata1[0].id,title:userdata1[0].title,content:userdata1[0].content},function(err, str){
+                    // str => 输出渲染后的 HTML 字符串
+                    if(err) {
+                        console.log('File is error.')
+                    }else{
+                                //  res.statusCode = 200;
+                        res.setHeader('Content-Type','text/html');
+                        res.end(str)
+                    }
+                                
+                });
+            
+            
+        });
+
+}) 
+app.post('/ReviseArticleAction',function(req,res,next){
+
+    var myDate = new Date();
+    var Y = myDate.getFullYear();
+    var M = myDate.getMonth()+1;
+    var D = myDate.getDate();
+    var h = myDate.getHours(); //获取当前小时数(0-23)  
+    var m = myDate.getMinutes(); //获取当前分钟数(0-59)  
+    var s = myDate.getSeconds(); //获取当前秒数(0-59)  
+    tim =  Y + '-'+ M + '-' + D +' '+h+':'+m+':'+s;
+    console.log(tim)
+    console.log(req.body);
+    tit = String(req.body.title);
+    pro = String(req.body.property);
+    con = String(req.body.content);
+    aid = String(req.query.id);
+ //   tim = String(myDate)
+    next();
+}) 
+app.use('/ReviseArticleAction',function(req,res,next){
+  
+        articledata.findById(aid, function (err, userdata2) {
+            if (err) return handleError(err);
+          
+            userdata2.title = tit;
+            userdata2.property = pro;
+            userdata2.content =con;
+            userdata2.time = tim;
+            userdata2.save(function (err, updatedUserdata) {
+              if (err) return handleError(err);
+            //    res.send(updatedUserdata);
+            });
+          });
+        ejs.renderFile('public/Revisearticle.html', {username:usr,id:aid,title:tit,content:con.content},function(err, str){
+            // str => 输出渲染后的 HTML 字符串
+            if(err) {
+                console.log('File is error.')
+            }else{
+                        //  res.statusCode = 200;
+                res.setHeader('Content-Type','text/html');
+                res.end(str)
+            }
+      
+        });      
 }) 
 app.listen(1804)
