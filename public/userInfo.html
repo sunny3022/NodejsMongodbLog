@@ -26,24 +26,21 @@
 		<div class="collapse navbar-collapse" id="navbarSupportedContent">
 			<ul class="navbar-nav mr-auto">
 			
-				<li class="nav-item active"><a class="nav-link" href="AllArticleServlet">首页</a></li>
-				<li class="nav-item"><a class="nav-link" href="MyArticleServlet">我的帖子</a></li>
+				<li class="nav-item active"><a class="nav-link" href="/Bokeindex">首页</a></li>
+				<li class="nav-item"><a class="nav-link" href="/MyArticle">我的帖子</a></li>
 				
-				<li class="nav-item"><a class="nav-link " href="Mymanagement.jsp">我的管理</a></li>
-				
-					
-				<li class="nav-item"><a class="nav-link " href="login.jsp">点我登录</a></li>
+				<li class="nav-item"><a class="nav-link " href="/Mymanagement">我的管理</a></li>
 				<li class="nav-item dropdown"><a
 					class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
 					role="button" data-toggle="dropdown" aria-haspopup="true"
-					aria-expanded="false"> </a>
+					aria-expanded="false"><%=username%> </a>
 					
 					
 					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-						<a class="dropdown-item" href="MyInfo">我的信息</a> <a
-							class="dropdown-item" href="editPwd.jsp">修改密码</a>
+						<a class="dropdown-item" href="/MyInfo">我的信息</a> <a
+							class="dropdown-item" href="/EditPwd">修改密码</a>
 						<div class="dropdown-divider"></div>
-						<a class="dropdown-item" href="login_out">注销</a>
+						<a class="dropdown-item" href="index.html">注销</a>
 					</div>
 				
 					
@@ -58,13 +55,12 @@
 		<div class="row" style="margin-top: 10px">
 			<div class="col-lg-3">
 				<ul class="list-group">
-					<a href="Mymanagement.jsp" class="list-group-item list-group-item-action" active>发表文章</a>
-					<a href="AllauthorServlet" class="list-group-item list-group-item-action" active>用户文章</a>
-					<a href="MyAllArticleServlet" class="list-group-item list-group-item-action">修改/删除文章</a>
-					<a href="MyAllReviewServlet" class="list-group-item list-group-item-action">修改/删除评论</a>
-					<a href="MyInfo" class="list-group-item list-group-item-action">我的信息</a>
+					<a href="/Mymanagement" class="list-group-item list-group-item-action" active>发表文章</a>
+					<a href="/ModDelArticle" class="list-group-item list-group-item-action">修改/删除文章</a>
+					<a href="/MyAllReview" class="list-group-item list-group-item-action">修改/删除评论</a>
+					<a href="/MyInfo" class="list-group-item list-group-item-action">我的信息</a>
 				
-					<a href="login.html" class="list-group-item list-group-item-action">登出</a>
+					<a href="index.html" class="list-group-item list-group-item-action">登出</a>
 				</ul>
 				<div class="card">
 					<ul class="list-group list-group-flush">
@@ -72,8 +68,7 @@
 						<li class="list-group-item">班级：19计算机2班</li>
 						<li class="list-group-item">姓名：陈蒙蒙</li>
 					</ul>
-				</div>
-			
+				</div>			
 			</div>
 			<div class="col-lg-9">
 				<div class="row">

@@ -99,7 +99,7 @@
 									<td><%=allarlist[i].time%></td>
 									<td><%=allarlist[i].author%></td>
 									<td>
-										<form action="/Articledetail/<%=allarlist[i]._id%>" method="POST">
+										<form action="/Articledetail?id=<%=allarlist[i]._id%>" method="POST">
 											<input type="submit"  class="btn btn-primary" name="submit1" value="查看">	
 										</form>			
 									</td>	

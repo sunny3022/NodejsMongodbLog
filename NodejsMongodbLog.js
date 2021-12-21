@@ -27,17 +27,16 @@ const schema1={
     author:String,
     readcount:String
 }
-
+const schema2={
+    review_articleId:String,
+    review_author:String,
+    review_content:String,
+    review_time:String
+}
 var usr;
 var ty;
 app.post('/RegAction',function(req,res,next){
     console.log(req.body);
-   
-// userdata.deleteMany({ sex: 'boy' }, function (err) {
-//     if (err) return handleError(err);
-//     // removed!
-//   });
-  
     usr = String(req.body.username);
     pwd = String(req.body.password);
     se = String(req.body.sex);
@@ -479,9 +478,9 @@ app.use('/OrderByproperty',function(req,res,next){
         }).sort({ property:1 });
     }
 }) 
-app.post('/Articledetail/:old_id',function(req,res,next){
-    console.log(req.params)
-    arid = String(req.params.old_id);
+app.post('/Articledetail',function(req,res,next){
+    console.log(req.query)
+    arid = String(req.query.id);
     console.log(arid)
     next();
     
@@ -489,16 +488,19 @@ app.post('/Articledetail/:old_id',function(req,res,next){
 app.use('/Articledetail',function(req,res,next){
     articledata.find({ _id: arid}, 'id title property content time author readcount', function (err, userdata1) {
         console.log(userdata1)
-        ejs.renderFile('public/articledetail.html', {username:usr,author:userdata1[0].author,title:userdata1[0].title,property:userdata1[0].property,content:userdata1[0].content,time:userdata1[0].time,readcount:userdata1[0].readcount},function(err, str){
-            // str => 输出渲染后的 HTML 字符串
-            if(err) {
-                console.log('File is error.')
-            }else{
-                        //  res.statusCode = 200;
-                res.setHeader('Content-Type','text/html');
-                res.end(str)
-            }                          
-        });
+        reviewdata.find({ review_articleId: arid}, 'id review_articleId review_author review_content review_time', function (err, userdata2) {
+            console.log(userdata2)
+            ejs.renderFile('public/articledetail.html', {username:usr,arid:userdata1[0].id,author:userdata1[0].author,title:userdata1[0].title,property:userdata1[0].property,content:userdata1[0].content,time:userdata1[0].time,readcount:userdata1[0].readcount,reviewlist:userdata2},function(err, str){
+                // str => 输出渲染后的 HTML 字符串
+                if(err) {
+                    console.log('File is error.')
+                }else{
+                            //  res.statusCode = 200;
+                    res.setHeader('Content-Type','text/html');
+                    res.end(str)
+                }                          
+            });
+        })
     })
     
     
@@ -634,9 +636,8 @@ app.use('/ModDelArticle',function(req,res,next){
         
     });
 }) 
-app.post('/InvalidArticle/:old_id',function(req,res,next){
-    console.log(req.params)
-    aid = String(req.params.old_id);
+app.post('/InvalidArticle',function(req,res,next){
+    aid = String(req.query.id);
     console.log(aid)
     next();
     
@@ -664,9 +665,8 @@ app.use('/InvalidArticle',function(req,res,next){
         });
       });
 }) 
-app.post('/ReviseArticle/:old_id',function(req,res,next){
-    console.log(req.params)
-    aid = String(req.params.old_id);
+app.post('/ReviseArticle',function(req,res,next){
+    aid = String(req.query.id);
     console.log(aid)
     next();
     
@@ -691,7 +691,7 @@ app.use('/ReviseArticle',function(req,res,next){
         });
 
 }) 
-app.post('/ReviseArticleAction/:old_id',function(req,res,next){
+app.post('/ReviseArticleAction',function(req,res,next){
 
     var myDate = new Date();
     var Y = myDate.getFullYear();
@@ -706,7 +706,7 @@ app.post('/ReviseArticleAction/:old_id',function(req,res,next){
     tit = String(req.body.title);
     pro = String(req.body.property);
     con = String(req.body.content);
-    aid = String(req.params.old_id);
+    aid = String(req.query.id);
  //   tim = String(myDate)
     next();
 }) 
@@ -734,8 +734,42 @@ app.use('/ReviseArticleAction',function(req,res,next){
                 res.end(str)
             }
       
-        }); 
-     
-       
+        });      
+}) 
+const reviewdata = mongoose.model('reviewdatas', schema2);
+app.post('/SendReview',function(req,res,next){
+    console.log(req.body);
+    content = String(req.body.review);
+    arid = String(req.query.id);
+    console.log(arid)
+    var myDate = new Date();
+    var Y = myDate.getFullYear();
+    var M = myDate.getMonth()+1;
+    var D = myDate.getDate();
+    var h = myDate.getHours(); //获取当前小时数(0-23)  
+    var m = myDate.getMinutes(); //获取当前分钟数(0-59)  
+    var s = myDate.getSeconds(); //获取当前秒数(0-59)  
+    tim =  Y + '-'+ M + '-' + D +' '+h+':'+m+':'+s;
+    next();
+}) 
+app.use('/SendReview',function(req,res,next){
+    const kitty = new reviewdata({ review_articleId:arid,review_author:usr,review_content:content,review_time:tim});
+        kitty.save().then(() => console.log('testmeow1'));        
+        articledata.find({ _id: arid}, 'id title property content time author readcount', function (err, userdata1) {
+            console.log(userdata1)
+            reviewdata.find({ review_articleId: arid}, 'id review_articleId review_author review_content review_time', function (err, userdata2) {
+                console.log(userdata2)
+                ejs.renderFile('public/articledetail.html', {username:usr,arid:userdata1[0].id,author:userdata1[0].author,title:userdata1[0].title,property:userdata1[0].property,content:userdata1[0].content,time:userdata1[0].time,readcount:userdata1[0].readcount,reviewlist:userdata2},function(err, str){
+                    // str => 输出渲染后的 HTML 字符串
+                    if(err) {
+                        console.log('File is error.')
+                    }else{
+                                //  res.statusCode = 200;
+                        res.setHeader('Content-Type','text/html');
+                        res.end(str)
+                    }                          
+                });
+            })
+        })
 }) 
 app.listen(1804)

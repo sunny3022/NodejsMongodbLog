@@ -16,7 +16,7 @@
 <body>
 	<nav class="navbar navbar-expand-lg navbar-light bg-light" >
 		<!-- Just an image -->
-		<img src="mm.jpg" width="30" height="30" alt=""> 
+		<img src="photo/mm.jpg" width="30" height="30" alt=""> 
 		<button class="navbar-toggler" type="button" data-toggle="collapse"
 			data-target="#navbarSupportedContent"
 			aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -27,24 +27,21 @@
 		<div class="collapse navbar-collapse" id="navbarSupportedContent">
 			<ul class="navbar-nav mr-auto">
 			
-				<li class="nav-item active"><a class="nav-link" href="AllArticleServlet">首页</a></li>
-				<li class="nav-item"><a class="nav-link" href="MyArticleServlet">我的帖子</a></li>
+				<li class="nav-item active"><a class="nav-link" href="/Bokeindex">首页</a></li>
+				<li class="nav-item"><a class="nav-link" href="/MyArticle">我的帖子</a></li>
 				
-				<li class="nav-item"><a class="nav-link " href="Mymanagement.jsp">我的管理</a></li>
-				
-					
-				<li class="nav-item"><a class="nav-link " href="login.jsp">点我登录</a></li>
+				<li class="nav-item"><a class="nav-link " href="/Mymanagement">我的管理</a></li>
 				<li class="nav-item dropdown"><a
 					class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
 					role="button" data-toggle="dropdown" aria-haspopup="true"
-					aria-expanded="false"><%=username%></a>
+					aria-expanded="false"><%=username%> </a>
 					
 					
 					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-						<a class="dropdown-item" href="MyInfo">我的信息</a> <a
-							class="dropdown-item" href="editPwd.jsp">修改密码</a>
+						<a class="dropdown-item" href="/MyInfo">我的信息</a> <a
+							class="dropdown-item" href="/EditPwd">修改密码</a>
 						<div class="dropdown-divider"></div>
-						<a class="dropdown-item" href="login_out">注销</a>
+						<a class="dropdown-item" href="index.html">注销</a>
 					</div>
 				
 					
@@ -62,7 +59,7 @@
 			<table border="0" width="1585" rules="all" cellpadding="0"
 				cellspacing="0">
 				<tr height="35" align="right">
-					<td>发表时间：<%=time %>&nbsp;&nbsp;&nbsp;&nbsp; 评论：
+					<td>发表时间：<%=time %>&nbsp;&nbsp;&nbsp;&nbsp; 评论：<%=reviewlist.length%>
 						条&nbsp;&nbsp;&nbsp;&nbsp;阅读：<%=readcount%>
 
 					</td>
@@ -87,7 +84,7 @@
 				<tr height="15">
 						</tr>
 			</table>
-			<form action="SendReviewServlet" method="post">
+			<form action="/SendReview?id=<%=arid%>" method="post">
 				<div class="form-group row">
 					<label for="inputEmail3" class="col-sm-2 col-form-label">评论</label>
 					<div class="col-sm-10">
@@ -97,30 +94,31 @@
 
 				</div>
 				<div align="right">
-					<button type="submit" href="SendReviewServlet"
+					<button type="submit" 
 						class="btn btn-primary">发布</button>
 					<input type="button" value="返&nbsp;回" class="btn btn-primary"
 						onClick="javascript:window.history.go(-1)">
 				</div>
+			</form>
 				<p>全部评论</p>
 				<table border="0" width="1085" rules="all" cellpadding="0"
 					cellspacing="0">
 					<tbody>
-						<c:forEach items="${articleList}" var="user" varStatus="i">
+						<% for(var i = 0;i < reviewlist.length;i++ ){%>
 							<tr cols="500">
-								<th scope="row">${i.count}</th>
-								<td align="right">评论者：${user.review_author}</td>
-								<td align="right">评论时间:${user.sdftime}</td>
+								<th scope="row"><%=reviewlist[i].id%></th>
+								<td align="right">评论者：<%=reviewlist[i].review_author%></td>
+								<td align="right">评论时间:<%=reviewlist[i].review_time%></td>
 							</tr>
 							<tr>
-								<td valign="top" colspan="3">${user.review_content}</td>
+								<td valign="top" colspan="3"><%=reviewlist[i].review_content%></td>
 							</tr>
 
-						</c:forEach>
+							<% } %>
 					</tbody>
 				</table>
 
-			</form>
+		
 
 			
 
