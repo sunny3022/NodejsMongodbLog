@@ -81,6 +81,7 @@ app.use('/RegAction', function (req, res, next) {
     }
     
 })
+var ide
 app.post('/LoginAction',function(req,res,next){
     console.log(req.body);
     usr = String(req.body.username);
@@ -88,23 +89,41 @@ app.post('/LoginAction',function(req,res,next){
     next();
 })           
 app.use('/LoginAction', function (req, res, next) {
-    userdata.findOne({ username: usr }, 'password', function (err, userdata) {
+    userdata.findOne({ username: usr }, 'password identity', function (err, userdata) {
         if (err) return handleError(err);
         // Prints "Space Ghost is a talk show host".
         if(pwd == userdata.password){
-            articledata.find({}, 'id title property content time author', function (err, userdata1) {
-                console.log(userdata1)
-                ejs.renderFile('public/bokeindex.html', {username:usr,allarlist:userdata1},function(err, str){
-                    // str => 输出渲染后的 HTML 字符串
-                    if(err) {
-                        console.log('File is error.')
-                    }else{
-                                //  res.statusCode = 200;
-                        res.setHeader('Content-Type','text/html');
-                        res.end(str)
-                    }                          
-                });
-            })
+            ide=userdata.identity
+            if(ide =='common user'){
+                articledata.find({}, 'id title property content time author', function (err, userdata1) {
+                    console.log(userdata1)
+                    ejs.renderFile('public/bokeindex.html', {username:usr,allarlist:userdata1},function(err, str){
+                        // str => 输出渲染后的 HTML 字符串
+                        if(err) {
+                            console.log('File is error.')
+                        }else{
+                                    //  res.statusCode = 200;
+                            res.setHeader('Content-Type','text/html');
+                            res.end(str)
+                        }                          
+                    });
+                })
+            }else{
+                articledata.find({}, 'id title property content time author', function (err, userdata1) {
+                    console.log(userdata1)
+                    ejs.renderFile('public/admin/adbokeindex.html', {username:usr,allarlist:userdata1},function(err, str){
+                        // str => 输出渲染后的 HTML 字符串
+                        if(err) {
+                            console.log('File is error.')
+                        }else{
+                                    //  res.statusCode = 200;
+                            res.setHeader('Content-Type','text/html');
+                            res.end(str)
+                        }                          
+                    });
+                })
+            }
+            
             
         }
         else{

@@ -50,5 +50,8 @@
 添加Revisereview.html到public文件  
 26.revise and delete review function finished  
 修改删除评论功能完成  
+27.common user function finished
+普通用户功能完成
 --------------common user 界面功能完成------------------------------------
-
+28.ADD adbokeindex.html
+添加管理员博客首页
