@@ -35,6 +35,9 @@ const schema2={
 }
 var usr;
 var ty;
+var tit1
+var ide
+var tit
 app.post('/RegAction',function(req,res,next){
     console.log(req.body);
     usr = String(req.body.username);
@@ -81,7 +84,7 @@ app.use('/RegAction', function (req, res, next) {
     }
     
 })
-var ide
+
 app.post('/LoginAction',function(req,res,next){
     console.log(req.body);
     usr = String(req.body.username);
@@ -218,7 +221,7 @@ app.use('/Edit', function (req, res, next) {
         console.log(user)
         userdata.findById(id, function (err, userdata2) {
             if (err) return handleError(err);
-          
+            爱
             userdata2.password = npwd;
             userdata2.save(function (err, updatedUserdata) {
               if (err) return handleError(err);
@@ -426,7 +429,7 @@ app.use('/MyArticle',function(req,res,next){
     });
 }) 
 
-var tit
+
 app.post('/SearchBytitle1',function(req,res,next){
     console.log(req.body);
     tit = String(req.body.title);
@@ -526,22 +529,150 @@ app.post('/Articledetail',function(req,res,next){
     
 }) 
 app.use('/Articledetail',function(req,res,next){
-    articledata.find({ _id: arid}, 'id title property content time author readcount', function (err, userdata1) {
-        console.log(userdata1)
-        reviewdata.find({ review_articleId: arid}, 'id review_articleId review_author review_content review_time', function (err, userdata2) {
-            console.log(userdata2)
-            
-            articledata.findById(arid, function (err, userdata3) {
-                if (err) return handleError(err);
-              
-                userdata3.readcount = (parseFloat(userdata3.readcount)+1).toString()
+    if(ide =='common user'){
+        articledata.find({ _id: arid}, 'id title property content time author readcount', function (err, userdata1) {
+            console.log(userdata1)
+            reviewdata.find({ review_articleId: arid}, 'id review_articleId review_author review_content review_time', function (err, userdata2) {
+                console.log(userdata2)
+                
+                articledata.findById(arid, function (err, userdata3) {
+                    if (err) return handleError(err);
+                  
+                    userdata3.readcount = (parseFloat(userdata3.readcount)+1).toString()
+                    
+                    
+                    userdata3.save(function (err, updatedUserdata) {
+                      if (err) return handleError(err);
+                    //    res.send(updatedUserdata);
+                    });
+                    ejs.renderFile('public/articledetail.html', {username:usr,arid:userdata1[0].id,author:userdata1[0].author,title:userdata1[0].title,property:userdata1[0].property,content:userdata1[0].content,time:userdata1[0].time,readcount:userdata3.readcount,reviewlist:userdata2},function(err, str){
+                        // str => 输出渲染后的 HTML 字符串
+                        if(err) {
+                            console.log('File is error.')
+                        }else{
+                                    //  res.statusCode = 200;
+                            res.setHeader('Content-Type','text/html');
+                            res.end(str)
+                        }                          
+                    });
+                  });
                 
                 
-                userdata3.save(function (err, updatedUserdata) {
-                  if (err) return handleError(err);
-                //    res.send(updatedUserdata);
-                });
-                ejs.renderFile('public/articledetail.html', {username:usr,arid:userdata1[0].id,author:userdata1[0].author,title:userdata1[0].title,property:userdata1[0].property,content:userdata1[0].content,time:userdata1[0].time,readcount:userdata3.readcount,reviewlist:userdata2},function(err, str){
+            })
+        })
+    }else{
+        articledata.find({ _id: arid}, 'id title property content time author readcount', function (err, userdata1) {
+            console.log(userdata1)
+            reviewdata.find({ review_articleId: arid}, 'id review_articleId review_author review_content review_time', function (err, userdata2) {
+                console.log(userdata2)
+                
+                
+                    ejs.renderFile('public/admin/adarticledetail.html', {username:usr,arid:userdata1[0].id,author:userdata1[0].author,title:userdata1[0].title,property:userdata1[0].property,content:userdata1[0].content,time:userdata1[0].time,readcount:userdata1[0].readcount,reviewlist:userdata2},function(err, str){
+                        // str => 输出渲染后的 HTML 字符串
+                        if(err) {
+                            console.log('File is error.')
+                        }else{
+                                    //  res.statusCode = 200;
+                            res.setHeader('Content-Type','text/html');
+                            res.end(str)
+                        }                          
+                    });
+                 
+                
+                
+            })
+        })
+    }
+    
+    
+    
+}) 
+app.use('/Bokeindex',function(req,res,next){
+    tit1 = null
+    tit = null
+    if(ide =='common user'){
+        articledata.find({}, 'id title property content time author', function (err, userdata1) {
+            console.log(userdata1)
+            ejs.renderFile('public/bokeindex.html', {username:usr,allarlist:userdata1},function(err, str){
+                // str => 输出渲染后的 HTML 字符串
+                if(err) {
+                    console.log('File is error.')
+                }else{
+                            //  res.statusCode = 200;
+                    res.setHeader('Content-Type','text/html');
+                    res.end(str)
+                }                          
+            });
+        })
+    }else{
+        articledata.find({}, 'id title property content time author', function (err, userdata1) {
+            console.log(userdata1)
+            ejs.renderFile('public/admin/adbokeindex.html', {username:usr,allarlist:userdata1},function(err, str){
+                // str => 输出渲染后的 HTML 字符串
+                if(err) {
+                    console.log('File is error.')
+                }else{
+                            //  res.statusCode = 200;
+                    res.setHeader('Content-Type','text/html');
+                    res.end(str)
+                }                          
+            });
+        })
+    }
+    
+    
+  
+}) 
+
+app.post('/SearchBytitle',function(req,res,next){
+    console.log(req.body);
+    tit1 = String(req.body.title);
+    next();
+})
+app.use('/SearchBytitle',function(req,res,next){
+    console.log(req.body);
+    usr = usr
+    if(ide=="common user"){
+        articledata.find({ title:tit1}, 'id title property author content time', function (err, userdata1) {
+            console.log(userdata1)
+            ejs.renderFile('public/bokeindex.html', {username:usr,allarlist:userdata1},function(err, str){
+                // str => 输出渲染后的 HTML 字符串
+                if(err) {
+                    console.log('File is error.')
+                }else{
+                            //  res.statusCode = 200;
+                    res.setHeader('Content-Type','text/html');
+                    res.end(str)
+                }
+                            
+            });
+        });
+    }else{
+        articledata.find({ title:tit1}, 'id title property author content time', function (err, userdata1) {
+            console.log(userdata1)
+            ejs.renderFile('public/admin/adbokeindex.html', {username:usr,allarlist:userdata1},function(err, str){
+                // str => 输出渲染后的 HTML 字符串
+                if(err) {
+                    console.log('File is error.')
+                }else{
+                            //  res.statusCode = 200;
+                    res.setHeader('Content-Type','text/html');
+                    res.end(str)
+                }
+                            
+            });
+        });
+    }
+    
+}) 
+app.use('/OrderByauthor',function(req,res,next){
+    console.log(req.body);
+    usr = usr
+    if(ide =='common user'){
+        if(tit1 == null){
+            articledata.find({ }, 'id title property author content time', function (err, userdata1) {
+                console.log(userdata1)
+                ejs.renderFile('public/bokeindex.html', {username:usr,allarlist:userdata1},function(err, str){
                     // str => 输出渲染后的 HTML 字符串
                     if(err) {
                         console.log('File is error.')
@@ -551,122 +682,122 @@ app.use('/Articledetail',function(req,res,next){
                         res.end(str)
                     }                          
                 });
-              });
-            
-            
-        })
-    })
-    
-    
-}) 
-app.use('/Bokeindex',function(req,res,next){
-    articledata.find({}, 'id title property content time author', function (err, userdata1) {
-        console.log(userdata1)
-        ejs.renderFile('public/bokeindex.html', {username:usr,allarlist:userdata1},function(err, str){
-            // str => 输出渲染后的 HTML 字符串
-            if(err) {
-                console.log('File is error.')
-            }else{
-                        //  res.statusCode = 200;
-                res.setHeader('Content-Type','text/html');
-                res.end(str)
-            }                          
-        });
-    })
-    
-  
-}) 
-var tit1
-app.post('/SearchBytitle',function(req,res,next){
-    console.log(req.body);
-    tit1 = String(req.body.title);
-    next();
-})
-app.use('/SearchBytitle',function(req,res,next){
-    console.log(req.body);
-    usr = usr
-    articledata.find({ title:tit1}, 'id title property author content time', function (err, userdata1) {
-        console.log(userdata1)
-        ejs.renderFile('public/bokeindex.html', {username:usr,allarlist:userdata1},function(err, str){
-            // str => 输出渲染后的 HTML 字符串
-            if(err) {
-                console.log('File is error.')
-            }else{
-                        //  res.statusCode = 200;
-                res.setHeader('Content-Type','text/html');
-                res.end(str)
-            }
-                        
-        });
-    });
-}) 
-app.use('/OrderByauthor',function(req,res,next){
-    console.log(req.body);
-    usr = usr
-    if(tit1 == null){
-        articledata.find({ }, 'id title property author content time', function (err, userdata1) {
-            console.log(userdata1)
-            ejs.renderFile('public/bokeindex.html', {username:usr,allarlist:userdata1},function(err, str){
-                // str => 输出渲染后的 HTML 字符串
-                if(err) {
-                    console.log('File is error.')
-                }else{
-                            //  res.statusCode = 200;
-                    res.setHeader('Content-Type','text/html');
-                    res.end(str)
-                }                          
-            });
-        }).sort({ author:1 });
+            }).sort({ author:1 });
+        }else{
+            articledata.find({ title:tit1}, 'id title property author content time', function (err, userdata1) {
+                console.log(userdata1)
+                ejs.renderFile('public/bokeindex.html', {username:usr,allarlist:userdata1},function(err, str){
+                    // str => 输出渲染后的 HTML 字符串
+                    if(err) {
+                        console.log('File is error.')
+                    }else{
+                                //  res.statusCode = 200;
+                        res.setHeader('Content-Type','text/html');
+                        res.end(str)
+                    }                          
+                });
+            }).sort({ author:1 });
+        }
     }else{
-        articledata.find({ title:tit1}, 'id title property author content time', function (err, userdata1) {
-            console.log(userdata1)
-            ejs.renderFile('public/bokeindex.html', {username:usr,allarlist:userdata1},function(err, str){
-                // str => 输出渲染后的 HTML 字符串
-                if(err) {
-                    console.log('File is error.')
-                }else{
-                            //  res.statusCode = 200;
-                    res.setHeader('Content-Type','text/html');
-                    res.end(str)
-                }                          
-            });
-        }).sort({ author:1 });
+        if(tit1 == null){
+            articledata.find({ }, 'id title property author content time', function (err, userdata1) {
+                console.log(userdata1)
+                ejs.renderFile('public/admin/adbokeindex.html', {username:usr,allarlist:userdata1},function(err, str){
+                    // str => 输出渲染后的 HTML 字符串
+                    if(err) {
+                        console.log('File is error.')
+                    }else{
+                                //  res.statusCode = 200;
+                        res.setHeader('Content-Type','text/html');
+                        res.end(str)
+                    }                          
+                });
+            }).sort({ author:1 });
+        }else{
+            articledata.find({ title:tit1}, 'id title property author content time', function (err, userdata1) {
+                console.log(userdata1)
+                ejs.renderFile('public/admin/adbokeindex.html', {username:usr,allarlist:userdata1},function(err, str){
+                    // str => 输出渲染后的 HTML 字符串
+                    if(err) {
+                        console.log('File is error.')
+                    }else{
+                                //  res.statusCode = 200;
+                        res.setHeader('Content-Type','text/html');
+                        res.end(str)
+                    }                          
+                });
+            }).sort({ author:1 });
+        }
     }
+    
     
 }) 
 
 app.use('/OrderBytime',function(req,res,next){
     console.log(req.body);
     usr = usr
-    if(tit1 == null){
-        articledata.find({ }, 'id title property author content time', function (err, userdata1) {
-            console.log(userdata1)
-            ejs.renderFile('public/bokeindex.html', {username:usr,allarlist:userdata1},function(err, str){
-                // str => 输出渲染后的 HTML 字符串
-                if(err) {
-                    console.log('File is error.')
-                }else{
-                            //  res.statusCode = 200;
-                    res.setHeader('Content-Type','text/html');
-                    res.end(str)
-                }                          
-            });
-        }).sort({ time:1 });
+    if(ide=='common user'){
+        if(tit1 == null){
+            articledata.find({ }, 'id title property author content time', function (err, userdata1) {
+                console.log(userdata1)
+                ejs.renderFile('public/bokeindex.html', {username:usr,allarlist:userdata1},function(err, str){
+                    // str => 输出渲染后的 HTML 字符串
+                    if(err) {
+                        console.log('File is error.')
+                    }else{
+                                //  res.statusCode = 200;
+                        res.setHeader('Content-Type','text/html');
+                        res.end(str)
+                    }                          
+                });
+            }).sort({ time:1 });
+        }else{
+            articledata.find({ title:tit1}, 'id title property author content time', function (err, userdata1) {
+                console.log(userdata1)
+                ejs.renderFile('public/bokeindex.html', {username:usr,allarlist:userdata1},function(err, str){
+                    // str => 输出渲染后的 HTML 字符串
+                    if(err) {
+                        console.log('File is error.')
+                    }else{
+                                //  res.statusCode = 200;
+                        res.setHeader('Content-Type','text/html');
+                        res.end(str)
+                    }                          
+                });
+            }).sort({ time:1 });
+        }
     }else{
-        articledata.find({ title:tit1}, 'id title property author content time', function (err, userdata1) {
-            console.log(userdata1)
-            ejs.renderFile('public/bokeindex.html', {username:usr,allarlist:userdata1},function(err, str){
-                // str => 输出渲染后的 HTML 字符串
-                if(err) {
-                    console.log('File is error.')
-                }else{
-                            //  res.statusCode = 200;
-                    res.setHeader('Content-Type','text/html');
-                    res.end(str)
-                }                          
-            });
-        }).sort({ time:1 });
+        if(tit1 == null){
+            articledata.find({}, 'id title property author content time', function (err, userdata1) {
+                console.log(userdata1)
+                ejs.renderFile('public/admin/adbokeindex.html', {username:usr,allarlist:userdata1},function(err, str){
+                    // str => 输出渲染后的 HTML 字符串
+                    if(err) {
+                        console.log('File is error.')
+                    }else{
+                                //  res.statusCode = 200;
+                        res.setHeader('Content-Type','text/html');
+                        res.end(str)
+                    }                          
+                });
+            }).sort({ time:1 });
+        }else{
+            articledata.find({ title:tit1}, 'id title property author content time', function (err, userdata1) {
+                console.log(userdata1)
+                ejs.renderFile('public/admin/adbokeindex.html', {username:usr,allarlist:userdata1},function(err, str){
+                    // str => 输出渲染后的 HTML 字符串
+                    if(err) {
+                        console.log('File is error.')
+                    }else{
+                                //  res.statusCode = 200;
+                        res.setHeader('Content-Type','text/html');
+                        res.end(str)
+                    }                          
+                });
+            }).sort({ time:1 });
+        }
     }
+   
     
 }) 
 app.use('/ModDelArticle',function(req,res,next){
