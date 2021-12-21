@@ -772,4 +772,21 @@ app.use('/SendReview',function(req,res,next){
             })
         })
 }) 
+app.use('/MyAllReview',function(req,res,next){    
+       
+    reviewdata.find({ review_author: usr}, 'id review_articleId review_author review_content review_time', function (err, userdata1) {
+        console.log(userdata2)
+        ejs.renderFile('public/articledetail.html', {username:usr,arid:userdata1[0].id,author:userdata1[0].author,title:userdata1[0].title,property:userdata1[0].property,content:userdata1[0].content,time:userdata1[0].time,readcount:userdata1[0].readcount,reviewlist:userdata2},function(err, str){
+            // str => 输出渲染后的 HTML 字符串
+                if(err) {
+                    console.log('File is error.')
+                }else{
+                                //  res.statusCode = 200;
+                    res.setHeader('Content-Type','text/html');
+                    res.end(str)
+                }                          
+            });
+        })
+       
+}) 
 app.listen(1804)

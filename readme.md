@@ -42,3 +42,5 @@
 删除文章功能成功
 22.Revise passages function finished
 修改文章功能成功
+23.review function finished
+创建reviewdatas数据库，添加数据库，查询数据库功能完成，同时删除Articledetail文件夹
