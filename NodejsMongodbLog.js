@@ -1107,4 +1107,21 @@ app.use('/DelAllArticle',function(req,res,next){
             });    
     });
 }) 
+
+app.use('/DelAllReview',function(req,res,next){ 
+    reviewdata.find({ }, 'id review_articleId review_author review_content review_time', function (err, userdata1) {
+        console.log(userdata1)            
+            ejs.renderFile('public/admin/adAllReview.html', {username:usr, allreviewlist:userdata1},function(err, str){
+                // str => 输出渲染后的 HTML 字符串
+                if(err) {
+                    console.log('File is error.'+err)
+                }else{
+                            //  res.statusCode = 200;
+                    res.setHeader('Content-Type','text/html');
+                    res.end(str)
+                }
+                            
+            });    
+    });
+}) 
 app.listen(1804)
