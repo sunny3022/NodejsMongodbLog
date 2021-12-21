@@ -16,7 +16,7 @@
 <body>
 	<nav class="navbar navbar-expand-lg navbar-light bg-light" >
 		<!-- Just an image -->
-		<img src="../photo/mm.jpg" width="30" height="30" alt=""> 
+		<img src="photo/mm.jpg" width="30" height="30" alt=""> 
 		<button class="navbar-toggler" type="button" data-toggle="collapse"
 			data-target="#navbarSupportedContent"
 			aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -28,6 +28,8 @@
 			<ul class="navbar-nav mr-auto">
 			
 				<li class="nav-item active"><a class="nav-link" href="/Bokeindex">首页</a></li>
+				<li class="nav-item"><a class="nav-link" href="/MyArticle">我的帖子</a></li>
+				
 				<li class="nav-item"><a class="nav-link " href="/Mymanagement">我的管理</a></li>
 				<li class="nav-item dropdown"><a
 					class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
@@ -57,72 +59,62 @@
 		<div class="row" style="margin-top: 10px">
 			<div class="col-lg-3">
 				<ul class="list-group">
-					<a href="/DelAllArticle" class="list-group-item list-group-item-action">所有文章</a>
-					<a href="/DelAllReview" class="list-group-item list-group-item-action">所有评论</a>
-					<a href="/DelAllUser" class="list-group-item list-group-item-action">所有用户</a>				
+					<a href="/Mymanagement" class="list-group-item list-group-item-action" active>发表文章</a>
+					<a href="/ModDelArticle" class="list-group-item list-group-item-action">修改/删除文章</a>
+					<a href="/MyAllReview" class="list-group-item list-group-item-action">修改/删除评论</a>
+					<a href="/MyInfo" class="list-group-item list-group-item-action">我的信息</a>
+				
 					<a href="index.html" class="list-group-item list-group-item-action">登出</a>
 				</ul>
 				<div class="card">
 					<ul class="list-group list-group-flush">
-						<li class="list-group-item">欢迎管理员<%=username%>！</li>
 						<li class="list-group-item">学号：190110910804</li>
 						<li class="list-group-item">班级：19计算机2班</li>
 						<li class="list-group-item">姓名：陈蒙蒙</li>
 					</ul>
 				</div>			
 			</div>
-			<div class="col-8" >
-				<div>
-					<div>
-					<form class="form-inline my-2 my-lg-0" action="/SearchBytitle" method="post">
-						<input class="form-control mr-sm-2" type="search"
-							placeholder="请输入文章名称" aria-label="Search" name="title">
-						<button class="btn btn-outline-success my-2 my-sm-0" type="submit">搜索</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						<a type="button" class="btn btn-info" href="/OrderByauthor">按作者</a>	
-						<a type="button" class="btn btn-info" href="/OrderBytime">按时间</a>	
-					</form>
+			<div class="col-lg-9">
+				<form action="/PublishAction" method="post"	>
+						<h1 class="h3 mb-3 font-weight-normal">发表文章</h1>
+					<div class="row">						
+						<label for="inputEmail3" class="col-sm-2 col-form-label">题目</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" id="inputEmail3"
+								name="title" placeholder="请输入题目..." 
+								>
+						</div>
 					</div>
-					
-				</div>
-					<div class="row">
-						<table class="table table-hover">
-							<thead>
-								<tr>
-									<th scope="col">序号</th>
-									<th scope="col">文章名称</th>
-									<th scope="col">发布时间</th>
-									<th scope="col">作者</th>
-									<th scope="col">阅读次数</th>
-									<th scope="col">操作</th>
-								</tr>
-							</thead>
-							<tbody>
-								<% for(var i = 0;i < allarlist.length;i++ ){%>
-									<tr>
-										<th scope="row"><%=allarlist[i]._id%></th>
-										<td><%=allarlist[i].title%></td>								
-										<td><%=allarlist[i].time%></td>
-										<td><%=allarlist[i].author%></td>
-										<td><%=allarlist[i].readcount%></td>
-										<td>
-											<form action="/InvalidArticle?id=<%=allarlist[i]._id%>" method="POST">
-												<input type="submit"  class="btn btn-danger" name="submit1" value="删除文章">	
-											</form>		
-											<form action="/Articledetail?id=<%=allarlist[i]._id%>" method="POST">
-												<input type="submit"  class="btn btn-primary" name="submit1" value="查看文章">	
-											</form>			
-										</td>	
-									</tr>   
-									<% } %>
-							</tbody>
-						</table>
-	
+					<fieldset class="form-group">
+						<div class="row">
+							<legend class="col-form-label col-sm-2 pt-0">性质</legend>
+							<div class="col-sm-10">
+								<div class="form-check form-check-inline">
+									<input class="form-check-input" type="radio" name="property"
+										id="property1" value="原创" checked=""> <label
+										class="form-check-label" for="inlineRadio1">原创</label>
+								</div>
+								<div class="form-check form-check-inline">
+									<input class="form-check-input" type="radio" name="property"
+										id="property2" value="摘抄"> <label
+										class="form-check-label" for="inlineRadio2">摘抄</label>
+								</div>
+							</div>
+						</div>
+					</fieldset>
+					<div class="form-group row">
+						<label for="inputEmail3" class="col-sm-2 col-form-label">内容</label>
+						<div class="col-sm-10">
+						        <textarea cols="100%" rows="20" placeholder="请输入文章内容..." name="content" ></textarea>
+						</div>
 					</div>
-				
-				
-				
-				
-				</div>
+			
+					<div class="col-sm-10" align="center">
+							<button type="submit" class="btn btn-primary">发表</button>
+					</div>
+						
+				</form>
+			</div>
 
 
 		</div>
