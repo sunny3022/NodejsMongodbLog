@@ -61,12 +61,15 @@
 添加管理员文章详情界面到admin文件夹  
 31.admin bokeindex function finished
 完成管理员博客首页界面，完成排序、搜索文章等功能
-32.admin view passages and delete passages function finished
-完成管理员查看文章和删除文章功能
-33.ADD adAllReview.html
-添加管理员评论详情界面到admin文件夹  
-33.delete all review function finished
-完成管理员删除文章功能
-34.ADD adAllauthor.html
-添加管理员用户界面到admin文件夹 
+32.admin view passages and delete passages function finished  
+完成管理员查看文章和删除文章功能  
+33.ADD adAllReview.html  
+添加管理员评论详情界面到admin文件夹    
+33.delete all review function finished  
+完成管理员删除文章功能  
+34.ADD adAllauthor.html  
+添加管理员用户界面到admin文件夹   
+35.admin view and delete common user function fineshed  
+添加管理员用户详情界面到admin文件夹，完成管理员查看和删除普通用户功能  
+--------------admin 界面功能完成------------------------------------   
 
