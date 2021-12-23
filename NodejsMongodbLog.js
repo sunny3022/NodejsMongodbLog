@@ -2,6 +2,7 @@ const express = require("express")
 const app = express()
 const ejs = require('ejs')
 const mongoose = require('mongoose');
+const e = require("express");
 mongoose.connect('mongodb://172.21.2.236:27017/190110910804');
 // const mydata = mongoose.model('cat1s', schema);
 // const kitty = new mydata({ name: 'testZildjian2' });
@@ -221,7 +222,6 @@ app.use('/Edit', function (req, res, next) {
         console.log(user)
         userdata.findById(id, function (err, userdata2) {
             if (err) return handleError(err);
-            爱
             userdata2.password = npwd;
             userdata2.save(function (err, updatedUserdata) {
               if (err) return handleError(err);
@@ -1005,23 +1005,44 @@ app.post('/InvalidReview',function(req,res,next){
 }) 
 app.use('/InvalidReview',function(req,res,next){
     usr = usr
-    reviewdata.deleteOne({ _id: rid }, function (err) {
-        if (err) return handleError(err);
-        reviewdata.find({ author: usr }, 'id review_articleId review_author review_content review_time', function (err, userdata1) {
-            console.log(userdata1)       
-                ejs.renderFile('public/MyAllReview.html', {username:usr, myreviewList:userdata1},function(err, str){
-                    // str => 输出渲染后的 HTML 字符串
-                    if(err) {
-                        console.log('File is error.')
-                    }else{
-                                //  res.statusCode = 200;
-                        res.setHeader('Content-Type','text/html');
-                        res.end(str)
-                    }
-                                
-                });
-        });
-      });
+    if(ide =='common user'){
+        reviewdata.deleteOne({ _id: rid }, function (err) {
+            if (err) return handleError(err);
+            reviewdata.find({ author: usr }, 'id review_articleId review_author review_content review_time', function (err, userdata1) {
+                console.log(userdata1)       
+                    ejs.renderFile('public/MyAllReview.html', {username:usr, myreviewList:userdata1},function(err, str){
+                        // str => 输出渲染后的 HTML 字符串
+                        if(err) {
+                            console.log('File is error.')
+                        }else{
+                                    //  res.statusCode = 200;
+                            res.setHeader('Content-Type','text/html');
+                            res.end(str)
+                        }
+                                    
+                    });
+            });
+          });
+    }else{
+        reviewdata.deleteOne({ _id: rid }, function (err) {
+            if (err) return handleError(err);
+            reviewdata.find({ }, 'id review_articleId review_author review_content review_time', function (err, userdata1) {
+                console.log(userdata1)       
+                    ejs.renderFile('public/admin/adAllReview.html', {username:usr, allreviewList:userdata1},function(err, str){
+                        // str => 输出渲染后的 HTML 字符串
+                        if(err) {
+                            console.log('File is error.')
+                        }else{
+                                    //  res.statusCode = 200;
+                            res.setHeader('Content-Type','text/html');
+                            res.end(str)
+                        }
+                                    
+                    });
+            });
+          });
+    }
+    
 }) 
 app.post('/ReviseReview',function(req,res,next){
     rid = String(req.query.id);
@@ -1111,7 +1132,23 @@ app.use('/DelAllArticle',function(req,res,next){
 app.use('/DelAllReview',function(req,res,next){ 
     reviewdata.find({ }, 'id review_articleId review_author review_content review_time', function (err, userdata1) {
         console.log(userdata1)            
-            ejs.renderFile('public/admin/adAllReview.html', {username:usr, allreviewlist:userdata1},function(err, str){
+            ejs.renderFile('public/admin/adAllReview.html', {username:usr, allreviewList:userdata1},function(err, str){
+                // str => 输出渲染后的 HTML 字符串
+                if(err) {
+                    console.log('File is error.'+err)
+                }else{
+                            //  res.statusCode = 200;
+                    res.setHeader('Content-Type','text/html');
+                    res.end(str)
+                }
+                            
+            });    
+    });
+}) 
+app.use('/DelAllUser',function(req,res,next){ 
+    reviewdata.find({ }, 'id review_articleId review_author review_content review_time', function (err, userdata1) {
+        console.log(userdata1)            
+            ejs.renderFile('public/admin/adAllauthor.html', {username:usr, allreviewList:userdata1},function(err, str){
                 // str => 输出渲染后的 HTML 字符串
                 if(err) {
                     console.log('File is error.'+err)
