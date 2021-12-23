@@ -1146,9 +1146,9 @@ app.use('/DelAllReview',function(req,res,next){
     });
 }) 
 app.use('/DelAllUser',function(req,res,next){ 
-    reviewdata.find({ }, 'id review_articleId review_author review_content review_time', function (err, userdata1) {
+    userdata.find({identity:'common user' }, 'id username sex major', function (err, userdata1) {
         console.log(userdata1)            
-            ejs.renderFile('public/admin/adAllauthor.html', {username:usr, allreviewList:userdata1},function(err, str){
+            ejs.renderFile('public/admin/adAllauthor.html', {username:usr, alluserList:userdata1},function(err, str){
                 // str => 输出渲染后的 HTML 字符串
                 if(err) {
                     console.log('File is error.'+err)
@@ -1160,5 +1160,60 @@ app.use('/DelAllUser',function(req,res,next){
                             
             });    
     });
+}) 
+app.post('/AuthorDetail',function(req,res,next){
+    uid = String(req.query.id);
+    console.log(uid)
+    next();
+    
+}) 
+
+app.use('/AuthorDetail',function(req,res,next){
+    userdata.findOne({ _id: uid}, 'username sex birth major talent', function (err, userdata1) {
+        console.log(userdata1)
+        if (err) return handleError(err);
+        else{
+            ejs.renderFile('public/admin/aduserInfo.html', {username:usr,author:userdata1.username,sex:userdata1.sex,birth:userdata1.birth,major:userdata1.major,talent:userdata1.talent},function(err, str){
+                // str => 输出渲染后的 HTML 字符串
+                if(err) {
+                    console.log('File is error.')
+                }else{
+                            //  res.statusCode = 200;
+                    res.setHeader('Content-Type','text/html');
+                    res.end(str)
+                }
+            });
+        }
+    
+                    
+    });
+})  
+app.post('/InvalidUser',function(req,res,next){
+    uid = String(req.query.id);
+    console.log(uid)
+    next();
+    
+}) 
+app.use('/InvalidUser',function(req,res,next){
+   
+
+        userdata.deleteOne({ _id: uid }, function (err) {
+            if (err) return handleError(err);
+            userdata.find({identity:'common user' }, 'id username sex major', function (err, userdata1) {
+                console.log(userdata1)            
+                    ejs.renderFile('public/admin/adAllauthor.html', {username:usr, alluserList:userdata1},function(err, str){
+                        // str => 输出渲染后的 HTML 字符串
+                        if(err) {
+                            console.log('File is error.'+err)
+                        }else{
+                                    //  res.statusCode = 200;
+                            res.setHeader('Content-Type','text/html');
+                            res.end(str)
+                        }
+                                    
+                    });    
+            });
+          });
+    
 }) 
 app.listen(1804)
