@@ -189,7 +189,7 @@ reviewdatas
 
 <img src="readme.assets/image-20211224215310877.png" alt="image-20211224215310877" style="zoom:50%;" />
 
-在网页搜索栏上输入http://172.21.17.84:1804/，进入首页
+在网页搜索栏上输入网址，进入首页
 
 <img src="readme.assets/image-20211224191839943.png" alt="image-20211224191839943" style="zoom:50%;" />
 
@@ -402,12 +402,8 @@ reviewdatas
 添加管理员用户详情界面到admin文件夹，完成管理员查看和删除普通用户功能  
 --------------admin 界面功能完成------------------------------------  
 36.improve the functions  
-校验功能           
-
-37.modify the readme.md
-
-修改说明文档
-
-38.finish readme.md
-
-完成说明文档
+校验功能              
+37.modify the readme.md   
+修改说明文档   
+38.finish readme.md  
+完成说明文档   
