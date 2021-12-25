@@ -91,5 +91,61 @@
 
 ### 2.业务流程
 
-![image-20211224181601958](https://github.com/sunny3022/NodejsMongodbLog/tree/master/readme.assets/image-20211224181601958.png)
+（1）总体流程
+
+![image-20211224181601958](./readme.assets/image-20211224181601958.png)
+
+（2）具体流程
+
+<img src="readme.assets/image-20211224184256849.png" alt="image-20211224184256849" style="zoom:50%;" />
+
+<img src="readme.assets/image-20211224184328547.png" alt="image-20211224184328547" style="zoom: 50%;" />
+
+<img src="readme.assets/image-20211224184412496.png" alt="image-20211224184412496" style="zoom: 67%;" />
+
+<img src="readme.assets/image-20211224184449761.png" alt="image-20211224184449761" style="zoom: 67%;" />
+
+<img src="readme.assets/image-20211224184528658.png" alt="image-20211224184528658" style="zoom: 67%;" />
+
+
+
+（3）数据设计
+
+userdatas表
+
+| 字段名称 | 数据类型 | 是否主键 | 中文说明 | 备注                       |
+| -------- | -------- | -------- | -------- | -------------------------- |
+| id       | int      | 是       | 序列号   | 系统自动生成               |
+| username | String   |          | 用户名   |                            |
+| password | String   |          | 密码     |                            |
+| sex      | String   |          | 性别     |                            |
+| birth    | String   |          | 生日     |                            |
+| major    | String   |          | 专业     |                            |
+| talent   | String   |          | 才能     |                            |
+| identity | String   |          | 身份     | 判断是否为管理员、普通用户 |
+
+articledatas表
+
+| 字段名称  | 数据类型 | 是否主键 | 中文说明     | 备注         |
+| --------- | -------- | -------- | ------------ | ------------ |
+| id        | int      | 是       | 序列号       | 系统自动生成 |
+| title     | String   |          | 文章名称     |              |
+| property  | String   |          | 文章属性     |              |
+| content   | String   |          | 文章内容     |              |
+| time      | String   |          | 文章发表时间 |              |
+| author    | String   |          | 文章作者     |              |
+| readcount | String   |          | 文章阅读次数 |              |
+
+reviewdatas
+
+| 字段名称         | 数据类型 | 是否主键 | 中文说明     | 备注         |
+| ---------------- | -------- | -------- | ------------ | ------------ |
+| id               | int      | 是       | 序列号       | 系统自动生成 |
+| review_articleId | String   |          | 评论文章id号 |              |
+| review_author    | String   |          | 评论人员姓名 |              |
+| review_content   | String   |          | 评论内容     |              |
+| review_time      | String   |          | 评论时间     |              |
+|                  |          |          |              |              |
+
+### 3.功能展示
 
