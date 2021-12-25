@@ -91,5 +91,5 @@
 
 ### 2.业务流程
 
-![image-20211224181601958](./readme.assets/image-20211224181601958.png)
+![image-20211224181601958](https://github.com/sunny3022/NodejsMongodbLog/master/readme.assets/image-20211224181601958.png)
 
