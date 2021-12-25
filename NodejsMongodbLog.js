@@ -40,6 +40,7 @@ var tit1;
 var ide;
 var tit;
 var pi;
+//获取注册数据
 app.post('/RegAction',function(req,res,next){
     console.log(req.body);
     usr = String(req.body.username);
@@ -53,7 +54,7 @@ app.post('/RegAction',function(req,res,next){
     console.log(oper)
     next();
 })
-
+//进行注册，写入数据库
 const userdata = mongoose.model('userdatas', schema);
 app.use('/RegAction', function (req, res, next) {
     if(oper == 'return'){
@@ -86,13 +87,14 @@ app.use('/RegAction', function (req, res, next) {
     }
     
 })
-
+//获取登陆数据
 app.post('/LoginAction',function(req,res,next){
     console.log(req.body);
     usr = String(req.body.username);
     pwd = String(req.body.password);
     next();
-})           
+})   
+//从数据库中查找帐号密码，若正确则进入        
 app.use('/LoginAction', function (req, res, next) {
     userdata.findOne({ username: usr }, 'password identity', function (err, userdata) {
         if (err) return handleError(err);
@@ -147,12 +149,14 @@ app.use('/LoginAction', function (req, res, next) {
         }
     });
 });
+//获取数据
 app.post('/ForgetPwdAction',function(req,res,next){
     console.log(req.body);
     usr = String(req.body.username);
     oper =String(req.body.submit1)
     next();
-})           
+}) 
+//找寻密码          
 app.use('/ForgetPwdAction', function (req, res, next) {
     userdata.findOne({ username: usr }, 'password', function (err, userdata) {
         if (err) return handleError(err);
@@ -187,7 +191,7 @@ app.use('/ForgetPwdAction', function (req, res, next) {
         
     });
 });
-
+//跳转到修改密码界面
 app.use('/EditPwd',function(req,res,next){
     console.log(req.body);
     usr = usr
@@ -203,6 +207,7 @@ app.use('/EditPwd',function(req,res,next){
                     
     });
 })  
+//获取数据
 app.post('/Edit',function(req,res,next){
     console.log(req.body);
     user = String(req.body.username);
@@ -210,6 +215,7 @@ app.post('/Edit',function(req,res,next){
     npwd = String(req.body.newPwd);
     next();
 })   
+//修改密码，对数据库进行修改
 app.use('/Edit', function (req, res, next) {
     
     userdata.findOne({ username: user }, 'id password', function (err, userdata1) {
@@ -260,6 +266,7 @@ app.use('/Edit', function (req, res, next) {
         
     });
 });
+//查询个人信息
 app.use('/MyInfo',function(req,res,next){
     if(ide == 'common user'){
         userdata.findOne({ username: usr }, 'sex birth major talent', function (err, userdata1) {
@@ -302,6 +309,7 @@ app.use('/MyInfo',function(req,res,next){
     }
     
 })  
+//进入到修改个人信息界面
 app.use('/Reviseinfo',function(req,res,next){
     console.log(req.body);
     usr = usr
@@ -317,8 +325,7 @@ app.use('/Reviseinfo',function(req,res,next){
                     
     });
 })  
-
-
+//获取数据
 app.post('/ReviseMyInfoAction',function(req,res,next){
     console.log(req.body);
     username = String(req.body.username);
@@ -328,7 +335,7 @@ app.post('/ReviseMyInfoAction',function(req,res,next){
     tal =String(req.body.talent);
     next();
 })   
-
+//修改个人信息，实现数据库修改操作
 app.use('/ReviseMyInfoAction',function(req,res,next){
     userdata.findOne({ username: usr }, 'id', function (err, userdata1) {
         if (err) return handleError(err);
@@ -363,6 +370,7 @@ app.use('/ReviseMyInfoAction',function(req,res,next){
     })
 })   
 const articledata = mongoose.model('articledatas', schema1);
+//跳转到我的管理界面
 app.use('/Mymanagement',function(req,res,next){
     console.log(req.body);
     usr = usr
@@ -399,7 +407,7 @@ app.use('/Mymanagement',function(req,res,next){
     }
     
 })  
-
+//获取数据
 app.post('/PublishAction',function(req,res,next){
 
     var myDate = new Date();
@@ -418,6 +426,7 @@ app.post('/PublishAction',function(req,res,next){
  //   tim = String(myDate)
     next();
 }) 
+//发表文章，查询数据库
 app.use('/PublishAction',function(req,res,next){
     const kitty = new articledata({ title:tit,property:pro,author:usr,content:con,time:tim,readcount:"0"});
         kitty.save().then(() => console.log('testmeow1'));        
@@ -433,9 +442,11 @@ app.use('/PublishAction',function(req,res,next){
                         
         });
 }) 
+//进入到我的文章界面
 app.use('/MyArticle',function(req,res,next){
     console.log(req.body);
     usr = usr
+    tit = null
     articledata.find({ author: usr }, 'id title property content time', function (err, userdata1) {
         console.log(userdata1)
         ejs.renderFile('public/MyArticle.html', {username:usr,myarlist:userdata1},function(err, str){
@@ -452,12 +463,13 @@ app.use('/MyArticle',function(req,res,next){
     });
 }) 
 
-
+//获取数据
 app.post('/SearchBytitle1',function(req,res,next){
     console.log(req.body);
     tit = String(req.body.title);
     next();
 })
+//搜索文章，数据库查找
 app.use('/SearchBytitle1',function(req,res,next){
     console.log(req.body);
     usr = usr
@@ -476,9 +488,11 @@ app.use('/SearchBytitle1',function(req,res,next){
         });
     });
 }) 
+//文章按时间排序
 app.use('/OrderBytime1',function(req,res,next){
     console.log(req.body);
     usr = usr
+    console.log(tit)
     if(tit == null){
         articledata.find({ author: usr }, 'id title property content time', function (err, userdata1) {
             console.log(userdata1)
@@ -510,6 +524,7 @@ app.use('/OrderBytime1',function(req,res,next){
     }
     
 }) 
+//文章按性质排序
 app.use('/OrderByproperty',function(req,res,next){
     console.log(req.body);
     usr = usr
@@ -544,6 +559,7 @@ app.use('/OrderByproperty',function(req,res,next){
         }).sort({ property:1 });
     }
 }) 
+//获取数据
 app.post('/Articledetail',function(req,res,next){
     console.log(req.query)
     arid = String(req.query.id);
@@ -552,6 +568,7 @@ app.post('/Articledetail',function(req,res,next){
     next();
     
 }) 
+//进入文章详情界面，数据库查询
 app.use('/Articledetail',function(req,res,next){
     if(ide =='common user'){
         articledata.find({ _id: arid}, 'id title property content time author readcount', function (err, userdata1) {
@@ -611,6 +628,7 @@ app.use('/Articledetail',function(req,res,next){
     
     
 }) 
+//进入博客首页
 app.use('/Bokeindex',function(req,res,next){
     tit1 = null
     tit = null
@@ -647,12 +665,13 @@ app.use('/Bokeindex',function(req,res,next){
     
   
 }) 
-
+//获取数据
 app.post('/SearchBytitle',function(req,res,next){
     console.log(req.body);
     tit1 = String(req.body.title);
     next();
 })
+//根据标题查询文章
 app.use('/SearchBytitle',function(req,res,next){
     console.log(req.body);
     usr = usr
@@ -689,6 +708,7 @@ app.use('/SearchBytitle',function(req,res,next){
     }
     
 }) 
+//文章按照作者排序
 app.use('/OrderByauthor',function(req,res,next){
     console.log(req.body);
     usr = usr
@@ -756,7 +776,7 @@ app.use('/OrderByauthor',function(req,res,next){
     
     
 }) 
-
+//文章按照时间排序
 app.use('/OrderBytime',function(req,res,next){
     console.log(req.body);
     usr = usr
@@ -824,6 +844,7 @@ app.use('/OrderBytime',function(req,res,next){
    
     
 }) 
+//修改文章，数据库修改
 app.use('/ModDelArticle',function(req,res,next){
     console.log(req.body);
     usr = usr
@@ -845,12 +866,14 @@ app.use('/ModDelArticle',function(req,res,next){
         
     });
 }) 
+//获取数据
 app.post('/InvalidArticle',function(req,res,next){
     aid = String(req.query.id);
     console.log(aid)
     next();
     
 }) 
+//删除文章 数据库删除
 app.use('/InvalidArticle',function(req,res,next){
     usr = usr
     if(ide =='common user'){
@@ -897,12 +920,14 @@ app.use('/InvalidArticle',function(req,res,next){
     }
     
 }) 
+//获取数据
 app.post('/ReviseArticle',function(req,res,next){
     aid = String(req.query.id);
     console.log(aid)
     next();
     
 }) 
+//跳转到修改文章界面
 app.use('/ReviseArticle',function(req,res,next){
     usr = usr
     articledata.find({ _id: aid }, 'id title property content time', function (err, userdata1) {
@@ -923,6 +948,7 @@ app.use('/ReviseArticle',function(req,res,next){
         });
 
 }) 
+//获取数据
 app.post('/ReviseArticleAction',function(req,res,next){
 
     var myDate = new Date();
@@ -942,6 +968,7 @@ app.post('/ReviseArticleAction',function(req,res,next){
  //   tim = String(myDate)
     next();
 }) 
+//修改文章
 app.use('/ReviseArticleAction',function(req,res,next){
         console.log(aid)
         articledata.findById(aid, function (err, userdata2) {
@@ -969,6 +996,7 @@ app.use('/ReviseArticleAction',function(req,res,next){
         });      
 }) 
 const reviewdata = mongoose.model('reviewdatas', schema2);
+//获取数据
 app.post('/SendReview',function(req,res,next){
     console.log(req.body);
     content = String(req.body.review);
@@ -986,6 +1014,7 @@ app.post('/SendReview',function(req,res,next){
     console.log('oper'+oper)
     next();
 }) 
+//发表评论 数据库插入、查询
 app.use('/SendReview',function(req,res,next){
     if(oper=='返回'){
         tit1 = null
@@ -1060,6 +1089,7 @@ app.use('/SendReview',function(req,res,next){
     }
     
 }) 
+//跳转到我的所有评论界面
 app.use('/MyAllReview',function(req,res,next){    
        
     reviewdata.find({ review_author: usr}, 'id review_articleId review_author review_content review_time', function (err, userdata1) {
@@ -1077,12 +1107,14 @@ app.use('/MyAllReview',function(req,res,next){
         })
        
 }) 
+//获取数据
 app.post('/InvalidReview',function(req,res,next){
     rid = String(req.query.id);
     console.log(rid)
     next();
     
 }) 
+//删除评论 数据库删除操作
 app.use('/InvalidReview',function(req,res,next){
     usr = usr
     if(ide =='common user'){
@@ -1124,12 +1156,14 @@ app.use('/InvalidReview',function(req,res,next){
     }
     
 }) 
+//获取数据
 app.post('/ReviseReview',function(req,res,next){
     rid = String(req.query.id);
     console.log(rid)
     next();
     
 }) 
+//跳转到修改评论界面
 app.use('/ReviseReview',function(req,res,next){
     usr = usr
     reviewdata.find({ _id: rid }, 'id review_articleId review_author review_content review_time', function (err, userdata1) {
@@ -1150,6 +1184,7 @@ app.use('/ReviseReview',function(req,res,next){
         });
 
 }) 
+//获取数据
 app.post('/ReviseReviewAction',function(req,res,next){
 
     var myDate = new Date();
@@ -1168,6 +1203,7 @@ app.post('/ReviseReviewAction',function(req,res,next){
  //   tim = String(myDate)
     next();
 }) 
+//评论修改 数据库修改、查询操作
 app.use('/ReviseReviewAction',function(req,res,next){
   
         reviewdata.findById(rid, function (err, userdata2) {
@@ -1192,6 +1228,7 @@ app.use('/ReviseReviewAction',function(req,res,next){
       
         });      
 }) 
+//跳转到所有文章界面
 app.use('/DelAllArticle',function(req,res,next){ 
     articledata.find({ }, 'id title property author content time readcount', function (err, userdata1) {
         console.log(userdata1)            
@@ -1208,7 +1245,7 @@ app.use('/DelAllArticle',function(req,res,next){
             });    
     });
 }) 
-
+//跳转到所有评论界面
 app.use('/DelAllReview',function(req,res,next){ 
     reviewdata.find({ }, 'id review_articleId review_author review_content review_time', function (err, userdata1) {
         console.log(userdata1)            
@@ -1225,6 +1262,7 @@ app.use('/DelAllReview',function(req,res,next){
             });    
     });
 }) 
+//跳转到所有用户界面
 app.use('/DelAllUser',function(req,res,next){ 
     userdata.find({identity:'common user' }, 'id username sex major', function (err, userdata1) {
         console.log(userdata1)            
@@ -1241,13 +1279,14 @@ app.use('/DelAllUser',function(req,res,next){
             });    
     });
 }) 
+//获取数据
 app.post('/AuthorDetail',function(req,res,next){
     uid = String(req.query.id);
     console.log(uid)
     next();
     
 }) 
-
+//查询用户信息 数据库查询操作
 app.use('/AuthorDetail',function(req,res,next){
     userdata.findOne({ _id: uid}, 'username sex birth major talent', function (err, userdata1) {
         console.log(userdata1)
@@ -1256,24 +1295,24 @@ app.use('/AuthorDetail',function(req,res,next){
             ejs.renderFile('public/admin/aduserInfo.html', {username:usr,author:userdata1.username,sex:userdata1.sex,birth:userdata1.birth,major:userdata1.major,talent:userdata1.talent},function(err, str){
                 // str => 输出渲染后的 HTML 字符串
                 if(err) {
-                    console.log('File is error.')
+                    console.log('File is error.'+err)
                 }else{
                             //  res.statusCode = 200;
                     res.setHeader('Content-Type','text/html');
                     res.end(str)
                 }
             });
-        }
-    首页
-                    
+        }         
     });
 })  
+//获取数据
 app.post('/InvalidUser',function(req,res,next){
     uid = String(req.query.id);
     console.log(uid)
     next();
     
 }) 
+//删除用户 数据库删除操作
 app.use('/InvalidUser',function(req,res,next){
    
 
